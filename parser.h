@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:23:31 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/14 11:36:55 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/14 14:16:23 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,5 @@
 # define PARSER_H
 
 # include "caracteristics.h"
-
 
 #endif

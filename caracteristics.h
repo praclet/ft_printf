@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:02:48 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/14 13:49:02 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/14 14:17:39 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,20 @@
 # define MODIFIER_HH	8
 
 typedef enum		e_conversion {
-					none = '\0',
-					c = 'c',
-					s = 's',
-					p = 'p',
-					d = 'd',
-					i = 'i',
-					u = 'u',
-					x = 'x',
-					X = 'X',
-					n = 'n',
-					f = 'f',
-					g = 'g',
-					e = 'e',
-					p100 = '%'
+	none = '\0',
+	c = 'c',
+	s = 's',
+	p = 'p',
+	d = 'd',
+	i = 'i',
+	u = 'u',
+	x = 'x',
+	X = 'X',
+	n = 'n',
+	f = 'f',
+	g = 'g',
+	e = 'e',
+	p100 = '%'
 }					t_conversion;
 
 typedef struct		s_caracteristics {
@@ -53,7 +53,7 @@ typedef struct		s_caracteristics {
 	t_conversion	conversion;
 }					t_caracteristics;
 
-t_caracteristcs		*new_caracteristics();
+t_caracteristics	*new_caracteristics();
 void				check_caracteristics(t_caracteristics *elem);
 
 #endif

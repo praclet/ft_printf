@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/24 11:09:12 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/14 13:39:54 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/14 14:15:52 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*ft_malloc_str(t_list *list)
 	return (malloc((length + 1) * sizeof(char)));
 }
 
-char	*ft_list_join(t_list *list)
+char		*ft_list_join(t_list *list)
 {
 	char	*res;
 	char	*res_tmp;
