@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:02:48 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/14 14:17:39 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/14 14:25:44 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct		s_caracteristics {
 	t_conversion	conversion;
 }					t_caracteristics;
 
-t_caracteristics	*new_caracteristics();
+t_caracteristics	*new_caracteristics(void);
 void				check_caracteristics(t_caracteristics *elem);
 
 #endif
