@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   caracteristics.h                                   :+:      :+:    :+:   */
+/*   element.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:02:48 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/14 14:25:44 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/14 18:11:56 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CARACTERISTICS_H
-# define CARACTERISTICS_H
+#ifndef ELEMENT_H
+# define ELEMENT_H
 
 # include "ft_printf.h"
 
@@ -45,15 +45,19 @@ typedef enum		e_conversion {
 	p100 = '%'
 }					t_conversion;
 
-typedef struct		s_caracteristics {
+typedef struct		s_element {
+	char			*str;
+	void			*arg1;
+	void			*arg2;
 	int				flags;
 	int				width;
 	int				precision;
 	int				modifiers;
 	t_conversion	conversion;
-}					t_caracteristics;
+}					t_element;
 
-t_caracteristics	*new_caracteristics(void);
-void				check_caracteristics(t_caracteristics *elem);
+t_element			*new_element(void);
+void				check_element(t_element *element);
+void				delete_element(t_element *element);
 
 #endif
