@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   element.h                                          :+:      :+:    :+:   */
+/*   list.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:02:48 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/14 18:11:56 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/15 09:20:01 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ELEMENT_H
-# define ELEMENT_H
+#ifndef LIST_H
+# define LIST_H
 
 # include "ft_printf.h"
 
@@ -45,19 +45,21 @@ typedef enum		e_conversion {
 	p100 = '%'
 }					t_conversion;
 
-typedef struct		s_element {
+typedef struct		s_list {
 	char			*str;
 	void			*arg1;
 	void			*arg2;
-	int				flags;
+	char			flags;
 	int				width;
 	int				precision;
-	int				modifiers;
+	char			modifiers;
 	t_conversion	conversion;
-}					t_element;
+	struct s_list	*next;
+}					t_list;
 
-t_element			*new_element(void);
-void				check_element(t_element *element);
-void				delete_element(t_element *element);
+t_list				*new_list(void);
+void				check_list(t_list *list);
+void				delete_list(t_list *list);
+char				*list_finish(t_list *list);
 
 #endif

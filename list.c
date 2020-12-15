@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   element.c                                   :+:      :+:    :+:   */
+/*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 10:52:18 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/14 18:12:00 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/15 09:34:11 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <limits.h>
+#include "libft/libft.h"
 #include "ft_printf.h"
-#include "element.h"
+#include "list.h"
 
-t_element	*new_element(void)
+t_list		*new_list(void)
 {
-	t_element	*res;
+	t_list	*res;
 
-	res = (t_element *)malloc(sizeof(t_element) * 1);
+	res = (t_list *)malloc(sizeof(t_list) * 1);
 	if (res)
 	{
 		res->str = NULL;
@@ -30,80 +31,69 @@ t_element	*new_element(void)
 		res->precision = INT_MIN;
 		res->modifiers = 0;
 		res->conversion = none;
+		res->next = NULL;
 	}
 	return (res);
 }
 
-void		check_element(t_element *elem)
+void		check_list(t_list *list)
 {
-	if (element->flags & FLAG_DASH)
-		element->flags &= ~FLAG_ZERO;
-	if (element->flags & FLAG_PLUS)
-		element->flags &= ~FLAG_SPACE;
+	if (list->flags & FLAG_DASH)
+		list->flags &= ~FLAG_ZERO;
+	if (list->flags & FLAG_PLUS)
+		list->flags &= ~FLAG_SPACE;
 }
 
-void		delete_element(t_element *element)
+void		delete_list(t_list *list)
 {
-	if (!element)
+	if (!list)
 		return ;
-	if (element->str)
-		free(element->str);
-	if (element->arg1)
-		free(element->arg1);
-	if (element->arg2)
-		free(element->arg2);
-	free(element);
+	if (list->str)
+		free(list->str);
+	if (list->arg1)
+		free(list->arg1);
+	if (list->arg2)
+		free(list->arg2);
+	free(list);
 }
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   list_strjoin.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/24 11:09:12 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/14 14:15:52 by praclet          ###   ########lyon.fr   */
-/*                                                                            */
-/* ************************************************************************** */
 
-#include "list_strjoin.h"
-#include "libft/libft.h"
-#include <stdlib.h>
-
-static char	*ft_malloc_str(t_list *list)
+static char	*malloc_str(t_list *list)
 {
 	int	length;
 
 	length = 0;
 	while (list)
 	{
-		length += ft_strlen((char *)list->content);
+		length += ft_strlen(list->str);
 		list = list->next;
 	}
 	return (malloc((length + 1) * sizeof(char)));
 }
 
-char		*ft_list_join(t_list *list)
+char		*list_finish(t_list *list)
 {
+	char	*cur;
 	char	*res;
-	char	*res_tmp;
-	int		tmp;
+	int		len;
+	t_list	*tmp;
 
 	res = ft_malloc_str(list);
-	res_tmp = res;
 	if (res)
 	{
+		cur = res;
 		while (list)
 		{
-			if (list->content)
+			if (list->str)
 			{
-				tmp = ft_strlen((char *)list->content);
-				ft_memcpy(res, list->content, tmp);
-				res += tmp;
+				len = ft_strlen(list->str);
+				ft_memcpy(cur, list->str, len);
+				cur += len;
 			}
-			list = list->next;
+			tmp = list->next;
+			delete_list(list);
+			list = tmp;
 		}
-		*res = 0;
+		*cur = 0;
 	}
-	return (res_tmp);
+	return (res);
 }
