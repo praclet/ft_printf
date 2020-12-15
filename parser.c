@@ -6,9 +6,8 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:24:12 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/14 11:37:16 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/15 14:29:14 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-#include "caracteristics.h"

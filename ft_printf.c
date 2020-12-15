@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/14 09:41:37 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/15 15:01:56 by praclet          ###   ########lyon.fr   */
+/*   Created: 2020/12/15 14:29:58 by praclet           #+#    #+#             */
+/*   Updated: 2020/12/15 15:01:48 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "ft_printf.h"
 
-int	ft_printf(const char *str, ...) __attribute__((format(printf,1,2)));
-
-#endif
+int	ft_printf(const char *str, ...) __attribute__((format(printf,1,2)))
+{
+	;
+}
