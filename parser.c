@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:24:12 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/16 13:20:22 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/16 15:03:19 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,57 +14,81 @@
 #include "parser.h"
 #include "list.h"
 
-int		is_in_set(char c, char *set)
+static int		is_in_set(char c, char *set)
 {
 	while (*set && *set != c)
 		set++;
 	return (*set == c);
 }
 
-t_list	*parse(char *str)
+static t_list	*add_element(t_list **res, t_list **last)
+{
+	t_list	*cur;
+
+	cur = new_elem;
+	if (!cur)
+	{
+		delete_list(res);
+		*res = NULL;
+		*last = NULL;
+	}
+	else
+	{
+		if (*res)
+			(*last)->next = cur;
+		else
+			*res = cur;
+		*last = cur;
+	}
+	return (cur);
+}
+
+static int		parse_text(char **str,
+	t_list **res, t_list **cur, t_list **last)
+{
+	char	*start;
+
+	if (!str || !res || !cur || !last)
+		return (NULL);
+	start = *str;
+	while (**str && **str != '%')
+		(*str)++;
+	if (start != *str)
+	{
+		*cur = add_element(res, last);
+		if (!(*cur))
+			return (0);
+		(*cur)->str = ft_substr(start, 0, *str - start);
+		if (!(*cur)->str)
+		{
+			delete_list(*res);
+			*res = NULL;
+			*cur = NULL;
+			*last = NULL;
+			return (0);
+		}
+		(*cur)->conversion = s;
+	}
+	return (1);
+}
+
+t_list			*parse(char *str)
 {
 	t_list	*res;
 	t_list	*last;
 	t_list	*cur;
-	char	*start;
 
 	res = NULL;
 	while (*str)
 	{
-		start = str;
-		while (*str && *str != '%')
-			str++;
-		if (start != str)
-		{
-			cur = (t_list *)malloc(sizeof(t_list) * 1);
-			if (!cur)
-			{
-				delete_list(res);
-				return (NULL);
-			}
-			cur->str = ft_substr(start, 0, str - start);
-			if (!cur->str)
-			{
-				free(cur);
-				delete_list(res);
-				return (NULL);
-			}
-			cur->conversion = s;
-			if (!res)
-				res = cur;
-			else
-				last->next = cur;
-			last = cur;
-		}
+		if (!parse_text(&str, &res, &cur, &last))
+			return (NULL);
 		if (*str == '%')
 		{
 			str++;
-			cur = (t_list *)malloc(t_list);
+			cur = add_element(&res, &last);
 			if (!cur)
-			{
-				delete_list(res);
 				return (NULL);
-			}
 			while (is_in_set(*str, "#0- +.*"))
 			{
 				if (*str == '#')
@@ -130,11 +154,6 @@ t_list	*parse(char *str)
 				str++;
 			}
 			cur->conversion = *str;
-			if (!res)
-				res = cur;
-			else
-				last->next = cur;
-			last = cur;
 			str++;
 		}
 	}
