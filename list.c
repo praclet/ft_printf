@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 10:52:18 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/16 08:54:03 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/16 17:02:09 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 #include "libft/libft.h"
 #include "list.h"
 
-t_list		*new_elem(void)
+t_chain		*new_elem(void)
 {
-	t_list	*res;
+	t_chain	*res;
 
-	res = (t_list *)malloc(sizeof(t_list) * 1);
+	res = (t_chain *)malloc(sizeof(t_chain) * 1);
 	if (res)
 	{
 		res->str = NULL;
@@ -35,7 +35,7 @@ t_list		*new_elem(void)
 	return (res);
 }
 
-void		check_elem(t_list *elem)
+void		check_elem(t_chain *elem)
 {
 	if (elem->flags & FLAG_DASH)
 		elem->flags &= ~FLAG_ZERO;
@@ -43,7 +43,7 @@ void		check_elem(t_list *elem)
 		elem->flags &= ~FLAG_SPACE;
 }
 
-void		delete_elem(t_list *elem)
+void		delete_elem(t_chain *elem)
 {
 	if (!elem)
 		return ;
@@ -56,9 +56,9 @@ void		delete_elem(t_list *elem)
 	free(elem);
 }
 
-void		delete_list(t_list *list)
+void		delete_list(t_chain *list)
 {
-	t_list	*tmp;
+	t_chain	*tmp;
 
 	while (list)
 	{
@@ -68,7 +68,7 @@ void		delete_list(t_list *list)
 	}
 }
 
-static char	*malloc_str(t_list *list)
+static char	*malloc_str(t_chain *list)
 {
 	int	length;
 
@@ -81,12 +81,12 @@ static char	*malloc_str(t_list *list)
 	return (malloc((length + 1) * sizeof(char)));
 }
 
-char		*list_finish(t_list *list)
+char		*list_finish(t_chain *list)
 {
 	char	*cur;
 	char	*res;
 	int		len;
-	t_list	*tmp;
+	t_chain	*tmp;
 
 	res = ft_malloc_str(list);
 	if (res)

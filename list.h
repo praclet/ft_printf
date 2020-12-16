@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:02:48 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/15 09:20:01 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/16 17:35:54 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef enum		e_conversion {
 	p100 = '%'
 }					t_conversion;
 
-typedef struct		s_list {
+typedef struct		s_chain {
 	char			*str;
 	void			*arg1;
 	void			*arg2;
@@ -54,12 +54,13 @@ typedef struct		s_list {
 	int				precision;
 	char			modifiers;
 	t_conversion	conversion;
-	struct s_list	*next;
-}					t_list;
+	struct s_chain	*next;
+}					t_chain;
 
-t_list				*new_list(void);
-void				check_list(t_list *list);
-void				delete_list(t_list *list);
-char				*list_finish(t_list *list);
+t_chain				*new_elem(void);
+void				check_elem(t_chain *list);
+void				delete_elem(t_chain *elem);
+void				delete_list(t_chain *list);
+char				*list_finish(t_chain *list);
 
 #endif

@@ -6,13 +6,14 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:24:12 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/16 15:03:19 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/16 17:44:00 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "parser.h"
 #include "list.h"
+#include "libft/libft.h"
 
 static int		is_in_set(char c, char *set)
 {
@@ -21,14 +22,14 @@ static int		is_in_set(char c, char *set)
 	return (*set == c);
 }
 
-static t_list	*add_element(t_list **res, t_list **last)
+static t_chain	*add_element(t_chain **res, t_chain **last)
 {
-	t_list	*cur;
+	t_chain	*cur;
 
-	cur = new_elem;
+	cur = new_elem();
 	if (!cur)
 	{
-		delete_list(res);
+		delete_list(*res);
 		*res = NULL;
 		*last = NULL;
 	}
@@ -44,12 +45,12 @@ static t_list	*add_element(t_list **res, t_list **last)
 }
 
 static int		parse_text(char **str,
-	t_list **res, t_list **cur, t_list **last)
+	t_chain **res, t_chain **cur, t_chain **last)
 {
 	char	*start;
 
 	if (!str || !res || !cur || !last)
-		return (NULL);
+		return (0);
 	start = *str;
 	while (**str && **str != '%')
 		(*str)++;
@@ -72,11 +73,56 @@ static int		parse_text(char **str,
 	return (1);
 }
 
-t_list			*parse(char *str)
+static void		parse_flag(char **str, t_chain *cur)
 {
-	t_list	*res;
-	t_list	*last;
-	t_list	*cur;
+	while (is_in_set(**str, "#0- +.*"))
+	{
+		if (**str == '#')
+			cur->flags |= FLAG_SHARP;
+		if (**str == '0')
+			cur->flags |= FLAG_ZERO;
+		if (**str == '-')
+			cur->flags |= FLAG_DASH;
+		if (**str == ' ')
+			cur->flags |= FLAG_SPACE;
+		if (**str == '+')
+			cur->flags |= FLAG_PLUS;
+		if (**str == '.')
+			cur->flags |= FLAG_DOT;
+		if (**str == '*')
+			cur->flags |= FLAG_STAR;
+		(*str)++;
+	}
+}
+
+void	parse_widt_prec(char **str, t_chain *cur)
+{
+	if (**str >= '1' && **str <= '9')
+	{
+		cur->width = 0;
+		while (**str >= '0' && **str <= '9')
+		{
+			cur->width = cur->width * 10 + **str - '0';
+			(*str)++;
+		}
+	}
+	if (**str == '.')
+	{
+		(*str)++;
+		cur->precision = 0;
+		while (**str && **str >= '0' && **str <= '9')
+		{
+			cur->precision = cur->precision * 10 + **str - '0';
+			(*str)++;
+		}
+	}
+}
+
+t_chain			*parse(char *str)
+{
+	t_chain	*res;
+	t_chain	*cur;
+	t_chain	*last;
 
 	res = NULL;
 	while (*str)
@@ -89,47 +135,11 @@ t_list			*parse(char *str)
 			cur = add_element(&res, &last);
 			if (!cur)
 				return (NULL);
-			while (is_in_set(*str, "#0- +.*"))
-			{
-				if (*str == '#')
-					cur->flags |= FLAG_SHARP;
-				if (*str == '0')
-					cur->flags |= FLAG_ZERO;
-				if (*str == '-')
-					cur->flags |= FLAG_DASH;
-				if (*str == ' ')
-					cur->flags |= FLAG_SPACE;
-				if (*str == '+')
-					cur->flags |= FLAG_PLUS;
-				if (*str == '.')
-					cur->flags |= FLAG_DOT;
-				if (*str == '*')
-					cur->flags |= FLAG_STAR;
-				str++;
-			}
-			if (*str >= '1' && *str <= '9')
-			{
-				cur->width = 0;
-				while (*str >= '0' && *str <= '9')
-				{
-					cur->width = cur->width * 10 + *str - '0';
-					str++;
-				}
-			}
-			if (*str == '.')
-			{
-				*str++;
-				cur->precision = 0;
-				while (*str && *str >= '0' && *str <= '9')
-				{
-					cur->precision = cur->precision * 10 + *str - '0';
-					str++;
-				}
-			}
+			parse_flag(&str, cur);
+			parse_widt_prec(&str, cur);
 			while (*str == 'h' || *str == 'l')
 			{
 				if (*str == 'h')
-				{
 					if (*(str + 1) == 'h')
 					{
 						cur->modifiers |= MODIFIER_HH;
@@ -137,7 +147,6 @@ t_list			*parse(char *str)
 					}
 					else
 						cur->modifiers |= MODIFIER_H;
-				}
 				else
 				{
 					if (*str == 'l')
