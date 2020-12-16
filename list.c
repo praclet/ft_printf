@@ -6,17 +6,16 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 10:52:18 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/15 09:34:11 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/16 08:54:03 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <limits.h>
 #include "libft/libft.h"
-#include "ft_printf.h"
 #include "list.h"
 
-t_list		*new_list(void)
+t_list		*new_elem(void)
 {
 	t_list	*res;
 
@@ -36,25 +35,37 @@ t_list		*new_list(void)
 	return (res);
 }
 
-void		check_list(t_list *list)
+void		check_elem(t_list *elem)
 {
-	if (list->flags & FLAG_DASH)
-		list->flags &= ~FLAG_ZERO;
-	if (list->flags & FLAG_PLUS)
-		list->flags &= ~FLAG_SPACE;
+	if (elem->flags & FLAG_DASH)
+		elem->flags &= ~FLAG_ZERO;
+	if (elem->flags & FLAG_PLUS)
+		elem->flags &= ~FLAG_SPACE;
+}
+
+void		delete_elem(t_list *elem)
+{
+	if (!elem)
+		return ;
+	if (elem->str)
+		free(elem->str);
+	if (elem->arg1)
+		free(elem->arg1);
+	if (elem->arg2)
+		free(elem->arg2);
+	free(elem);
 }
 
 void		delete_list(t_list *list)
 {
-	if (!list)
-		return ;
-	if (list->str)
-		free(list->str);
-	if (list->arg1)
-		free(list->arg1);
-	if (list->arg2)
-		free(list->arg2);
-	free(list);
+	t_list	*tmp;
+
+	while (list)
+	{
+		tmp = list->next;
+		delete_elem(list);
+		list = tmp;
+	}
 }
 
 static char	*malloc_str(t_list *list)

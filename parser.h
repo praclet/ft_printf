@@ -6,11 +6,13 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:23:31 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/15 14:31:49 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/15 18:01:04 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
+
+t_list	*parse(char *str);
 
 #endif
