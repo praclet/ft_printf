@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:24:12 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/18 09:26:25 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/18 09:30:12 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static void		parse_flag(char **str, t_chain *cur)
 	}
 }
 
-void			parse_widt_prec(char **str, t_chain *cur)
+void			parse_width_prec(char **str, t_chain *cur)
 {
 	if (**str >= '1' && **str <= '9')
 	{
@@ -153,7 +153,7 @@ t_chain			*parse(char *str)
 			if (!cur)
 				return (NULL);
 			parse_flag(&str, cur);
-			parse_widt_prec(&str, cur);
+			parse_width_prec(&str, cur);
 			parse_modifiers(&str, cur);
 			cur->conversion = *str;
 			str++;

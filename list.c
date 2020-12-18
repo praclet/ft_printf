@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 10:52:18 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/16 17:02:09 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/18 09:32:06 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char		*list_finish(t_chain *list)
 	int		len;
 	t_chain	*tmp;
 
-	res = ft_malloc_str(list);
+	res = malloc_str(list);
 	if (res)
 	{
 		cur = res;
