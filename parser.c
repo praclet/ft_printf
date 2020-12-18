@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:24:12 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/16 17:44:00 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/18 09:26:25 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static void		parse_flag(char **str, t_chain *cur)
 	}
 }
 
-void	parse_widt_prec(char **str, t_chain *cur)
+void			parse_widt_prec(char **str, t_chain *cur)
 {
 	if (**str >= '1' && **str <= '9')
 	{
@@ -118,12 +118,29 @@ void	parse_widt_prec(char **str, t_chain *cur)
 	}
 }
 
+void			parse_modifiers(char **str, t_chain *cur)
+{
+	while (**str == 'h' || **str == 'l')
+	{
+		if (**str == *(*str + 1))
+		{
+			cur->modifiers |= **str == 'h' ? MODIFIER_HH : MODIFIER_LL;
+			(*str)++;
+		}
+		else
+			cur->modifiers |= **str == 'h' ? MODIFIER_H : MODIFIER_L;
+		(*str)++;
+	}
+}
+
 t_chain			*parse(char *str)
 {
 	t_chain	*res;
 	t_chain	*cur;
 	t_chain	*last;
 
+	if (!str)
+		return (NULL);
 	res = NULL;
 	while (*str)
 	{
@@ -137,31 +154,7 @@ t_chain			*parse(char *str)
 				return (NULL);
 			parse_flag(&str, cur);
 			parse_widt_prec(&str, cur);
-			while (*str == 'h' || *str == 'l')
-			{
-				if (*str == 'h')
-					if (*(str + 1) == 'h')
-					{
-						cur->modifiers |= MODIFIER_HH;
-						str++;
-					}
-					else
-						cur->modifiers |= MODIFIER_H;
-				else
-				{
-					if (*str == 'l')
-					{
-						if (*(str + 1) == 'l')
-						{
-							cur->modifiers |= MODIFIER_LL;
-							str++;
-						}
-						else
-							cur->modifiers |= MODIFIER_L;
-					}
-				}
-				str++;
-			}
+			parse_modifiers(&str, cur);
 			cur->conversion = *str;
 			str++;
 		}
