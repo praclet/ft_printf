@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:24:12 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/18 09:30:12 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/18 14:28:00 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,6 @@
 #include "parser.h"
 #include "list.h"
 #include "libft/libft.h"
-
-static int		is_in_set(char c, char *set)
-{
-	while (*set && *set != c)
-		set++;
-	return (*set == c);
-}
 
 static t_chain	*add_element(t_chain **res, t_chain **last)
 {
@@ -75,7 +68,7 @@ static int		parse_text(char **str,
 
 static void		parse_flag(char **str, t_chain *cur)
 {
-	while (is_in_set(**str, "#0- +.*"))
+	while (ft_strchr("#0- +.*", **str))
 	{
 		if (**str == '#')
 			cur->flags |= FLAG_SHARP;
@@ -110,7 +103,7 @@ void			parse_width_prec(char **str, t_chain *cur)
 	{
 		(*str)++;
 		cur->precision = 0;
-		while (**str && **str >= '0' && **str <= '9')
+		while (**str >= '0' && **str <= '9')
 		{
 			cur->precision = cur->precision * 10 + **str - '0';
 			(*str)++;
@@ -125,11 +118,13 @@ void			parse_modifiers(char **str, t_chain *cur)
 		if (**str == *(*str + 1))
 		{
 			cur->modifiers |= **str == 'h' ? MODIFIER_HH : MODIFIER_LL;
-			(*str)++;
+			(*str) += 2;
 		}
 		else
+		{
 			cur->modifiers |= **str == 'h' ? MODIFIER_H : MODIFIER_L;
-		(*str)++;
+			(*str)++;
+		}
 	}
 }
 
@@ -159,5 +154,5 @@ t_chain			*parse(char *str)
 			str++;
 		}
 	}
-	return (res);
+	return (check_list(res));
 }

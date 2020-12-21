@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 10:52:18 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/18 09:32:06 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/18 15:29:01 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,25 +35,34 @@ t_chain		*new_elem(void)
 	return (res);
 }
 
-void		check_elem(t_chain *elem)
+t_chain		*check_list(t_chain *elem)
 {
-	if (elem->flags & FLAG_DASH)
-		elem->flags &= ~FLAG_ZERO;
-	if (elem->flags & FLAG_PLUS)
-		elem->flags &= ~FLAG_SPACE;
+	t_chain	*res;
+
+	res = elem;
+	while (elem)
+	{
+		if (elem->flags & FLAG_DASH)
+			elem->flags &= ~FLAG_ZERO;
+		if (elem->flags & FLAG_PLUS)
+			elem->flags &= ~FLAG_SPACE;
+		elem = elem->next;
+	}
+	return (res);
 }
 
 void		delete_elem(t_chain *elem)
 {
-	if (!elem)
-		return ;
-	if (elem->str)
-		free(elem->str);
-	if (elem->arg1)
-		free(elem->arg1);
-	if (elem->arg2)
-		free(elem->arg2);
-	free(elem);
+	if (elem)
+	{
+		if (elem->str)
+			free(elem->str);
+		if (elem->arg1)
+			free(elem->arg1);
+		if (elem->arg2)
+			free(elem->arg2);
+		free(elem);
+	}
 }
 
 void		delete_list(t_chain *list)

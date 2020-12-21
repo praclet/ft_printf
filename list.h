@@ -6,14 +6,12 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:02:48 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/16 17:35:54 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/18 15:29:45 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIST_H
 # define LIST_H
-
-# include "ft_printf.h"
 
 # define FLAG_SHARP		1
 # define FLAG_ZERO		2
@@ -37,7 +35,7 @@ typedef enum		e_conversion {
 	i = 'i',
 	u = 'u',
 	x = 'x',
-	X = 'X',
+	upper_x = 'X',
 	n = 'n',
 	f = 'f',
 	g = 'g',
@@ -58,7 +56,7 @@ typedef struct		s_chain {
 }					t_chain;
 
 t_chain				*new_elem(void);
-void				check_elem(t_chain *list);
+t_chain				*check_list(t_chain *list);
 void				delete_elem(t_chain *elem);
 void				delete_list(t_chain *list);
 char				*list_finish(t_chain *list);
