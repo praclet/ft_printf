@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:24:12 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/18 14:28:00 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/21 09:33:58 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int		parse_text(char **str,
 			*last = NULL;
 			return (0);
 		}
-		(*cur)->conversion = s;
+		(*cur)->conversion = 's';
 	}
 	return (1);
 }
@@ -111,9 +111,9 @@ void			parse_width_prec(char **str, t_chain *cur)
 	}
 }
 
-void			parse_modifiers(char **str, t_chain *cur)
+void			parse_modifier_conversion(char **str, t_chain *cur)
 {
-	while (**str == 'h' || **str == 'l')
+	if (**str == 'h' || **str == 'l')
 	{
 		if (**str == *(*str + 1))
 		{
@@ -125,6 +125,11 @@ void			parse_modifiers(char **str, t_chain *cur)
 			cur->modifiers |= **str == 'h' ? MODIFIER_H : MODIFIER_L;
 			(*str)++;
 		}
+	}
+	if (ft_strchr(CONVERSION, **str))
+	{
+		cur->conversion = **str;
+		(*str)++;
 	}
 }
 
@@ -149,9 +154,7 @@ t_chain			*parse(char *str)
 				return (NULL);
 			parse_flag(&str, cur);
 			parse_width_prec(&str, cur);
-			parse_modifiers(&str, cur);
-			cur->conversion = *str;
-			str++;
+			parse_modifier_conversion(&str, cur);
 		}
 	}
 	return (check_list(res));

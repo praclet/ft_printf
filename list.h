@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:02:48 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/18 15:29:45 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/21 10:35:03 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,32 +26,17 @@
 # define MODIFIER_H		4
 # define MODIFIER_HH	8
 
-typedef enum		e_conversion {
-	none = '\0',
-	c = 'c',
-	s = 's',
-	p = 'p',
-	d = 'd',
-	i = 'i',
-	u = 'u',
-	x = 'x',
-	upper_x = 'X',
-	n = 'n',
-	f = 'f',
-	g = 'g',
-	e = 'e',
-	p100 = '%'
-}					t_conversion;
+# define CONVERSION		"cspdiuxXnfge%"
 
 typedef struct		s_chain {
 	char			*str;
 	void			*arg1;
 	void			*arg2;
-	char			flags;
+	unsigned char	flags;
 	int				width;
 	int				precision;
-	char			modifiers;
-	t_conversion	conversion;
+	unsigned char	modifiers;
+	char			conversion;
 	struct s_chain	*next;
 }					t_chain;
 
