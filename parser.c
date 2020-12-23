@@ -6,11 +6,12 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:24:12 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/23 12:48:13 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/23 14:01:36 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <limits.h>
 #include "parser.h"
 #include "list.h"
 #include "libft/libft.h"
@@ -82,33 +83,48 @@ static void		parse_flag(const char **str, t_chain *cur)
 			cur->flags |= FLAG_PLUS;
 		if (**str == '.')
 			cur->flags |= FLAG_DOT;
-		if (**str == '*')
-			cur->flags |= FLAG_STAR;
 		(*str)++;
+	}
+}
+
+void			parse_prec(const char **str, t_chain *cur)
+{
+	if (**str == '.')
+	{
+		(*str)++;
+		cur->precision = 0;
+		if (**str == '*')
+		{
+			cur->precision = INT_MAX;
+			(*str)++;
+		}
+		else
+			while (**str >= '0' && **str <= '9')
+			{
+				cur->precision = cur->precision * 10 + **str - '0';
+				(*str)++;
+			}
 	}
 }
 
 void			parse_width_prec(const char **str, t_chain *cur)
 {
-	if (**str >= '1' && **str <= '9')
+	if ((**str >= '1' && **str <= '9') || **str == '*')
 	{
 		cur->width = 0;
-		while (**str >= '0' && **str <= '9')
+		if (**str == '*')
 		{
-			cur->width = cur->width * 10 + **str - '0';
+			cur->width = INT_MAX;
 			(*str)++;
 		}
+		else
+			while (**str >= '0' && **str <= '9')
+			{
+				cur->width = cur->width * 10 + **str - '0';
+				(*str)++;
+			}
 	}
-	if (**str == '.')
-	{
-		(*str)++;
-		cur->precision = 0;
-		while (**str >= '0' && **str <= '9')
-		{
-			cur->precision = cur->precision * 10 + **str - '0';
-			(*str)++;
-		}
-	}
+	parse_prec(str, cur);
 }
 
 void			parse_modifier_conversion(const char **str, t_chain *cur)

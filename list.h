@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:02:48 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/23 13:07:23 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/23 13:48:32 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # define FLAG_SPACE		8
 # define FLAG_PLUS		16
 # define FLAG_DOT		32
-# define FLAG_STAR		64
 
 # define MODIFIER_L		1
 # define MODIFIER_LL	2
