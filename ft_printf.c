@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 14:29:58 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/23 12:46:13 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/23 13:03:18 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_printf(const char *str, ...)
 
 	list = parse(str);
 	va_start(ap, str);
-	affectation(list,ap);
+	affectation(list, ap);
 	va_end(ap);
 	return (0);
 }

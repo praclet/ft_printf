@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:02:48 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/23 12:22:07 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/23 13:07:23 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ typedef struct					s_chain {
 		double					arg_double;
 		int						arg_int;
 		wint_t					arg_wint_t;
-		char					*arg_pchar;
-		wchar_t					*arg_wchar_t;
 		void					*arg_ptr;
 	}							u_arg;
 	unsigned char				flags;
