@@ -6,13 +6,13 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 14:29:58 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/15 15:01:48 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/23 11:56:33 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *str, ...) __attribute__((format(printf,1,2)))
+int	ft_printf(const char *str, ...)
 {
-	;
+	return (0);
 }

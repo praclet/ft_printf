@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 10:52:18 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/21 09:34:31 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/23 10:35:01 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,11 @@ t_chain		*new_elem(void)
 	if (res)
 	{
 		res->str = NULL;
-		res->arg1 = NULL;
-		res->arg2 = NULL;
 		res->flags = 0;
 		res->width = INT_MIN;
 		res->precision = INT_MIN;
 		res->modifiers = 0;
-		res->conversion = '\0';
+		res->conversion = 0;
 		res->next = NULL;
 	}
 	return (res);
@@ -57,10 +55,6 @@ void		delete_elem(t_chain *elem)
 	{
 		if (elem->str)
 			free(elem->str);
-		if (elem->arg1)
-			free(elem->arg1);
-		if (elem->arg2)
-			free(elem->arg2);
 		free(elem);
 	}
 }

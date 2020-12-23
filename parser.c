@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:24:12 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/21 09:33:58 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/23 10:47:12 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,8 @@ t_chain			*parse(char *str)
 	if (!str)
 		return (NULL);
 	res = NULL;
+	cur = NULL;
+	last = NULL;
 	while (*str)
 	{
 		if (!parse_text(&str, &res, &cur, &last))
