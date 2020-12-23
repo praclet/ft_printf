@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:02:48 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/23 10:35:06 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/23 12:22:07 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,14 @@ typedef struct					s_chain {
 	char						*str;
 	union
 	{
-		char					arg_char;
-		char					*arg_pchar;
-		wchar_t					*arg_wchar_t;
-		signed char				arg_schar;
-		unsigned char			arg_uchar;
-		double					arg_double;
-		void					*arg_ptr;
-		int						arg_int;
-		unsigned int			arg_uint;
-		long int				arg_lint;
-		short int				arg_short_int;
-		unsigned short int		arg_u_short_int;
-		unsigned long int		arg_ulint;
 		long long int			arg_llint;
 		unsigned long long int	arg_ullint;
+		double					arg_double;
+		int						arg_int;
 		wint_t					arg_wint_t;
+		char					*arg_pchar;
+		wchar_t					*arg_wchar_t;
+		void					*arg_ptr;
 	}							u_arg;
 	unsigned char				flags;
 	int							width;
