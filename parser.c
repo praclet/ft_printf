@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:24:12 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/23 10:47:12 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/23 12:48:13 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ static t_chain	*add_element(t_chain **res, t_chain **last)
 	return (cur);
 }
 
-static int		parse_text(char **str,
+static int		parse_text(const char **str,
 	t_chain **res, t_chain **cur, t_chain **last)
 {
-	char	*start;
+	const char	*start;
 
 	if (!str || !res || !cur || !last)
 		return (0);
@@ -66,7 +66,7 @@ static int		parse_text(char **str,
 	return (1);
 }
 
-static void		parse_flag(char **str, t_chain *cur)
+static void		parse_flag(const char **str, t_chain *cur)
 {
 	while (ft_strchr("#0- +.*", **str))
 	{
@@ -88,7 +88,7 @@ static void		parse_flag(char **str, t_chain *cur)
 	}
 }
 
-void			parse_width_prec(char **str, t_chain *cur)
+void			parse_width_prec(const char **str, t_chain *cur)
 {
 	if (**str >= '1' && **str <= '9')
 	{
@@ -111,7 +111,7 @@ void			parse_width_prec(char **str, t_chain *cur)
 	}
 }
 
-void			parse_modifier_conversion(char **str, t_chain *cur)
+void			parse_modifier_conversion(const char **str, t_chain *cur)
 {
 	if (**str == 'h' || **str == 'l')
 	{
@@ -133,7 +133,7 @@ void			parse_modifier_conversion(char **str, t_chain *cur)
 	}
 }
 
-t_chain			*parse(char *str)
+t_chain			*parse(const char *str)
 {
 	t_chain	*res;
 	t_chain	*cur;

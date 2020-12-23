@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:23:31 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/16 17:03:13 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/23 12:43:47 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 
 # include "list.h"
 
-t_chain	*parse(char *str);
+t_chain	*parse(const char *str);
 
 #endif
