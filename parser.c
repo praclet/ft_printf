@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:24:12 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/23 14:01:36 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/26 10:14:53 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int		parse_text(const char **str,
 {
 	const char	*start;
 
-	if (!str || !res || !cur || !last)
+	if (!str || !*str || !res || !cur || !last)
 		return (0);
 	start = *str;
 	while (**str && **str != '%')
@@ -69,7 +69,7 @@ static int		parse_text(const char **str,
 
 static void		parse_flag(const char **str, t_chain *cur)
 {
-	while (ft_strchr("#0- +.*", **str))
+	while (ft_strchr("#0- +.", **str))
 	{
 		if (**str == '#')
 			cur->flags |= FLAG_SHARP;
