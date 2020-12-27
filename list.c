@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 10:52:18 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/26 10:36:50 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/27 10:19:24 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,17 @@ t_chain		*check_list(t_chain *elem)
 			elem->flags &= ~FLAG_ZERO;
 		if (elem->flags & FLAG_PLUS)
 			elem->flags &= ~FLAG_SPACE;
-		if (ft_strchr("fFeEgGaAp", elem->conversion))
+		if (elem->conversion == 'p')
 			elem->modifiers = 0;
-		if (ft_strchr("cs", elem->conversion))
+		if (elem->conversion == 'c' || elem->conversion == 's')
 			elem->modifiers &= MODIFIER_L;
+		if (elem->conversion == 'c')
+		{
+			elem->flags &= ~FLAG_SHARP & ~FLAG_SPACE & ~FLAG_PLUS & ~FLAG_DOT;
+			if (elem->width <=0)
+				elem->width = 1;
+			elem->precision = 1;
+		}
 		elem = elem->next;
 	}
 	return (res);

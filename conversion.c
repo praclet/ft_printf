@@ -6,11 +6,12 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 14:37:52 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/26 12:16:27 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/26 15:40:16 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "list.h"
+#include "libft/libft.h"
 
 static int	convert_c(t_chain *list)
 {
