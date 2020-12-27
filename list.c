@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 10:52:18 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/27 14:23:57 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/27 18:03:42 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,11 @@ t_chain		*check_list(t_chain *elem)
 			elem->flags &= ~FLAG_SPACE;
 		if (elem->conversion == 'p')
 			elem->modifiers = 0;
-		if (elem->conversion == 'c' || elem->conversion == 's')
-			elem->modifiers &= MODIFIER_L;
+		if (elem->conversion == '%')
+		{
+			elem->conversion = 'c';
+			elem->u_arg.arg_int = '%';
+		}
 		if (elem->conversion == 'c')
 		{
 			elem->flags &= ~FLAG_SHARP & ~FLAG_SPACE & ~FLAG_PLUS;
