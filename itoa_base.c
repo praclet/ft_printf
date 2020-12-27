@@ -6,7 +6,7 @@
 /*   By: praclet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 14:19:01 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/26 15:39:31 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/27 11:13:36 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void		itoa_base_(long nb, char *base, char *res, int nb_digit)
 			*res = base[nb];
 		else
 		{
-			itoa_base_(nb / length, base, res, nb_digit - 1);
+			itoa_base_(nb / length, base, res, nb_digit);
 			itoa_base_(nb % length, base, res + nb_digit - 1, 1);
 		}
 	}
