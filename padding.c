@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 13:31:43 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/27 17:18:25 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/29 16:36:40 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ char	*padding(char *str, int length, char pad, int right_justified)
 	{
 		if (right_justified)
 		{
-			ft_memset(res, pad, length - len_str);
-			ft_memcpy(res + length - len_str, str, len_str);
+			ft_memcpy(res, str, len_str);
+			ft_memset(res + len_str, pad, length - len_str);
 		}
 		else
 		{
-			ft_memcpy(res, str, len_str);
-			ft_memset(res + len_str, pad, length - len_str);
+			ft_memset(res, pad, length - len_str);
+			ft_memcpy(res + length - len_str, str, len_str);
 		}
 		res[length] = 0;
 		free(str);

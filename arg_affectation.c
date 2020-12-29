@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 12:51:58 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/27 18:03:46 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/29 16:54:09 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,17 @@ void		affectation(t_chain *list, va_list ap)
 				affectation_di(list, ap);
 			if (ft_strchr("uoxX", list->conversion))
 				affectation_uoxx(list, ap);
-			if (ft_strchr("c", list->conversion))
+			if (list->conversion == 'c')
 			{
 				if (!list->modifiers)
 					list->u_arg.arg_int = (int)va_arg(ap, int);
 				if (list->modifiers & MODIFIER_L)
 					list->u_arg.arg_wint_t = (wint_t)va_arg(ap, wint_t);
+			}
+			if (list->conversion == '%')
+			{
+				list->conversion = 'c';
+				list->u_arg.arg_int = '%';
 			}
 			if (ft_strchr("fFeEgGaA", list->conversion))
 				list->u_arg.arg_double = (double)va_arg(ap, double);
