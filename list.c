@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 10:52:18 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/27 18:03:42 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/29 16:28:17 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,27 +85,14 @@ void		delete_list(t_chain *list)
 	}
 }
 
-static char	*malloc_str(t_chain *list)
-{
-	int	length;
-
-	length = 0;
-	while (list)
-	{
-		length += ft_strlen(list->str);
-		list = list->next;
-	}
-	return (malloc((length + 1) * sizeof(char)));
-}
-
-char		*list_finish(t_chain *list)
+char		*list_finish(t_chain *list, int length)
 {
 	char	*cur;
 	char	*res;
 	int		len;
 	t_chain	*tmp;
 
-	res = malloc_str(list);
+	res = malloc(sizeof(char) * length);
 	if (res)
 	{
 		cur = res;
@@ -123,5 +110,7 @@ char		*list_finish(t_chain *list)
 		}
 		*cur = 0;
 	}
+	else
+		delete_list(list);
 	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:02:48 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/27 13:28:21 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/29 16:28:58 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ t_chain							*new_elem(void);
 t_chain							*check_list(t_chain *list);
 void							delete_elem(t_chain *elem);
 void							delete_list(t_chain *list);
-char							*list_finish(t_chain *list);
+char							*list_finish(t_chain *list, int length);
 
 #endif
