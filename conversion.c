@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 14:37:52 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/29 14:03:47 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/29 17:43:49 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ static int	convert_c(t_chain *list)
 	list->str = malloc(sizeof(char) * 2);
 	if (!list->str)
 		return (-1);
-	list->str[0] = (char) list->u_arg.arg_int;
+	list->str[0] = (char)list->u_arg.arg_int;
 	list->str[1] = 0;
 	if (list->width > 1)
-		list->str = padding(list-> str, list->width,
+		list->str = padding(list->str, list->width,
 			list->flags & FLAG_ZERO ? '0' : ' ', list->flags & FLAG_DASH);
 	return (list->width);
 }
