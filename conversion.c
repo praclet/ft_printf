@@ -6,17 +6,25 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 14:37:52 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/29 11:13:14 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/29 14:03:47 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "list.h"
+#include "padding.h"
 #include "libft/libft.h"
 
 static int	convert_c(t_chain *list)
 {
-	(void)list;
-	return (0);
+	list->str = malloc(sizeof(char) * 2);
+	if (!list->str)
+		return (-1);
+	list->str[0] = (char) list->u_arg.arg_int;
+	list->str[1] = 0;
+	if (list->width > 1)
+		list->str = padding(list-> str, list->width,
+			list->flags & FLAG_ZERO ? '0' : ' ', list->flags & FLAG_DASH);
+	return (list->width);
 }
 
 static int	convert_s(t_chain *list)
@@ -85,6 +93,7 @@ static int	convert_(t_chain *list)
 int			convert(t_chain *list)
 {
 	int	res;
+	int	tmp;
 
 	res = 0;
 	while (list)
@@ -94,7 +103,13 @@ int			convert(t_chain *list)
 			if (list->conversion == 'n')
 				*((int *)list->u_arg.arg_ptr) = res;
 			else
-				res += convert_(list);
+			{
+				tmp = convert_(list);
+				if (tmp >= 0)
+					res += tmp;
+				else
+					return (-1);
+			}
 		}
 		else
 			res += ft_strlen(list->str);

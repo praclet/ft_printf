@@ -22,7 +22,7 @@ OBJS		:=	$(SRCS:.c=.o)
 DEPS		:=	$(OBJS:.o=.d)
 
 .SILENT		:
-.PHONY		:	all clean fclean re libft test
+.PHONY		:	all clean fclean re
 
 %.d			:	%.c
 	$(CC) -MM $< | sed -e '1s%^%$@ %' > $@
@@ -34,7 +34,8 @@ $(NAME)(%.o)	:	%.c
 	$(AR) $(ARFLAGS) $(NAME) $%
 	echo './$% added to $(NAME).'
 
-all $(NAME)	bonus	:	libft $(patsubst %,$(NAME)(%),$(OBJS))
+all $(NAME)	bonus	:	$(patsubst %,$(NAME)(%),$(OBJS))
+	$(MAKE) -C libft
 	echo './$(NAME) completed.'
 
 ifneq ($(MAKECMDGOALS),fclean)
@@ -52,10 +53,3 @@ fclean		:	clean
 	echo './$(NAME) deleted.'
 
 re			:	fclean all
-
-libft		:
-	$(MAKE) -C libft
-
-test		:	all
-	$(MAKE) -C pft
-	pft/test c
