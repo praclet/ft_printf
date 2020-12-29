@@ -22,21 +22,26 @@ OBJS		:=	$(SRCS:.c=.o)
 DEPS		:=	$(OBJS:.o=.d)
 
 .SILENT		:
-.PHONY		:	all clean fclean re
+.PHONY		:	all clean fclean re libft
 
 %.d			:	%.c
 	$(CC) -MM $< | sed -e '1s%^%$@ %' > $@
 	echo './$@ generated.'
 
-$(NAME)(%.o)	:	%.c
-	$(CC) $(CFLAGS) -c $< -o $%
-	echo './$% generated.'
+%.o			:	%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+	echo './$@ generated.'
+
+$(NAME)(%.o)	:	%.o
 	$(AR) $(ARFLAGS) $(NAME) $%
 	echo './$% added to $(NAME).'
 
-all $(NAME)	bonus	:	$(patsubst %,$(NAME)(%),$(OBJS))
-	$(MAKE) -C libft
+all $(NAME)	bonus	:	libft $(patsubst %,$(NAME)(%),$(OBJS))
 	echo './$(NAME) completed.'
+
+libft :
+	$(MAKE) -C libft
+	echo 'libft objects added to $(NAME).'
 
 ifneq ($(MAKECMDGOALS),fclean)
 -include $(DEPS)
