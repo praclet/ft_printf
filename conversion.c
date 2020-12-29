@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 14:37:52 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/27 18:03:50 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/29 11:13:14 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,42 +15,50 @@
 
 static int	convert_c(t_chain *list)
 {
-	;
+	(void)list;
+	return (0);
 }
 
 static int	convert_s(t_chain *list)
 {
-	;
+	(void)list;
+	return (0);
 }
 
 static int	convert_p(t_chain *list)
 {
-	;
+	(void)list;
+	return (0);
 }
 
 static int	convert_d(t_chain *list)
 {
-	;
+	(void)list;
+	return (0);
 }
 
 static int	convert_i(t_chain *list)
 {
-	;
+	(void)list;
+	return (0);
 }
 
 static int	convert_u(t_chain *list)
 {
-	;
+	(void)list;
+	return (0);
 }
 
 static int	convert_o(t_chain *list)
 {
-	;
+	(void)list;
+	return (0);
 }
 
 static int	convert_xx(t_chain *list)
 {
-	;
+	(void)list;
+	return (0);
 }
 
 static int	convert_(t_chain *list)
