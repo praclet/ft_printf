@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 14:37:52 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/30 11:43:15 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/30 13:44:11 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "list.h"
 #include "padding.h"
 #include "libft/libft.h"
+#include "itoa_base.h"
 
 static int	convert_c(t_chain *list)
 {
@@ -33,23 +34,25 @@ static int	convert_s(t_chain *list)
 	char	*tmp;
 	int		len;
 
-	if (list->u_arg.arg_ptr)
-		list->str = ft_strdup(list->u_arg.arg_ptr);
-	else
-		list->str = ft_strdup("(null)");
+	list->str = list->u_arg.arg_ptr
+		? ft_strdup(list->u_arg.arg_ptr) : ft_strdup("(null)");
+	if (!list->str)
+		return (-1);
 	len = ft_strlen(list->str);
 	if (list->precision != INT_MIN && list->precision < len)
 	{
 		tmp = list->str;
 		list->str = ft_substr(list->str, 0, list->precision);
 		free(tmp);
+		if (!list->str)
+			return (-1);
 		len = ft_strlen(list->str);
 	}
 	if (len < list->width)
 	{
 		list->str = padding(list->str, list->width,
 			list->flags & FLAG_ZERO ? '0' : ' ', list->flags & FLAG_DASH);
-		return (list->width);
+		return (!list->str ? -1 : list->width);
 	}
 	return (len);
 }
@@ -62,8 +65,8 @@ static int	convert_p(t_chain *list)
 
 static int	convert_d(t_chain *list)
 {
-	(void)list;
-	return (0);
+	list->str = ft_itoa_base(list->u_arg.arg_llint, "0123456789");
+	return (ft_strlen(list->str));
 }
 
 static int	convert_i(t_chain *list)

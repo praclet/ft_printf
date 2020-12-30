@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 12:51:58 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/30 11:17:34 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/30 13:36:59 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void		affectation(t_chain *list, va_list ap)
 				list->u_arg.arg_double = (double)va_arg(ap, double);
 			if (ft_strchr("spn", list->conversion))
 				list->u_arg.arg_ptr = (void *)va_arg(ap, void *);
+			if (ft_strchr("d", list->conversion) && list->precision != INT_MIN)
+				list->flags &= ~FLAG_ZERO;
 		}
 		list = list->next;
 	}
