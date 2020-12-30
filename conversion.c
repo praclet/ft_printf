@@ -6,10 +6,11 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 14:37:52 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/30 10:51:18 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/30 11:43:15 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <limits.h>
 #include "list.h"
 #include "padding.h"
 #include "libft/libft.h"
@@ -32,22 +33,23 @@ static int	convert_s(t_chain *list)
 	char	*tmp;
 	int		len;
 
-	if (list->str)
-		list->str=ft_strdup(list->u_arg.arg_ptr);
+	if (list->u_arg.arg_ptr)
+		list->str = ft_strdup(list->u_arg.arg_ptr);
 	else
-		list->str=ft_strdup("(null)");
-	if (list->precision != INT_MIN)
+		list->str = ft_strdup("(null)");
+	len = ft_strlen(list->str);
+	if (list->precision != INT_MIN && list->precision < len)
 	{
 		tmp = list->str;
-		list->str=ft_substr(list->str, 0, list->precision);
+		list->str = ft_substr(list->str, 0, list->precision);
 		free(tmp);
+		len = ft_strlen(list->str);
 	}
-	len = ft_strlen(list->str);
 	if (len < list->width)
 	{
 		list->str = padding(list->str, list->width,
 			list->flags & FLAG_ZERO ? '0' : ' ', list->flags & FLAG_DASH);
-		return (ft_strlen(list->str));
+		return (list->width);
 	}
 	return (len);
 }

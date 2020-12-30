@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 12:51:58 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/29 17:58:21 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/30 11:17:34 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,17 @@ static void	affectation_uoxx(t_chain *list, va_list ap)
 static void	affectation_star(t_chain *list, va_list ap)
 {
 	if (list->width == INT_MAX)
+	{
 		list->width = (int)va_arg(ap, int);
+		if (list->width < 0)
+			list->width = INT_MIN;
+	}
 	if (list->precision == INT_MAX)
+	{
 		list->precision = (int)va_arg(ap, int);
+		if (list->precision < 0)
+			list->precision = INT_MIN;
+	}
 }
 
 static void	affectation_c(t_chain *list, va_list ap)
