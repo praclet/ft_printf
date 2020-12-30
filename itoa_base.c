@@ -6,7 +6,7 @@
 /*   By: praclet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 14:19:01 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/27 11:13:36 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/30 18:47:30 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int		digit_nb(long long int nb, int len)
 {
 	int	res;
 
-	res = nb <= 0 ? 1 : 0;
+	res = nb <= 0 ? 2 : 1;
 	while (nb /= len)
 		res++;
 	return (res);
@@ -48,7 +48,8 @@ static int		check_base(char *base, int length)
 	return (1);
 }
 
-static void		itoa_base_(long nb, char *base, char *res, int nb_digit)
+static void		itoa_base_(long long int nb, char *base, char *res,
+		int nb_digit)
 {
 	int length;
 
@@ -56,7 +57,7 @@ static void		itoa_base_(long nb, char *base, char *res, int nb_digit)
 	if (nb < 0)
 	{
 		*res = '-';
-		itoa_base_(-(nb / length), base, res + 1, nb_digit - 1);
+		itoa_base_(-(nb / length), base, res + 1, nb_digit - 2);
 		itoa_base_(-(nb % length), base, res + nb_digit - 1, 1);
 	}
 	else
@@ -65,7 +66,7 @@ static void		itoa_base_(long nb, char *base, char *res, int nb_digit)
 			*res = base[nb];
 		else
 		{
-			itoa_base_(nb / length, base, res, nb_digit);
+			itoa_base_(nb / length, base, res, nb_digit - 1);
 			itoa_base_(nb % length, base, res + nb_digit - 1, 1);
 		}
 	}
@@ -81,10 +82,11 @@ char			*itoa_base(long long int nbr, char *base)
 	if (check_base(base, length))
 	{
 		nb_digit = digit_nb(nbr, length);
-		res = (char *)malloc(sizeof(char) * nb_digit);
+		res = (char *)malloc(sizeof(char) * (nb_digit + 1));
 		if (!res)
 			return (NULL);
 		itoa_base_(nbr, base, res, nb_digit);
+		res[nb_digit] = 0;
 		return (res);
 	}
 	return (NULL);

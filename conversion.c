@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 14:37:52 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/30 13:44:11 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/30 17:40:57 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	convert_p(t_chain *list)
 
 static int	convert_d(t_chain *list)
 {
-	list->str = ft_itoa_base(list->u_arg.arg_llint, "0123456789");
+	list->str = itoa_base(list->u_arg.arg_llint, "0123456789");
 	return (ft_strlen(list->str));
 }
 
