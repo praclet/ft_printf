@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 14:37:52 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/29 17:43:49 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/30 10:51:18 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,27 @@ static int	convert_c(t_chain *list)
 
 static int	convert_s(t_chain *list)
 {
-	(void)list;
-	return (0);
+	char	*tmp;
+	int		len;
+
+	if (list->str)
+		list->str=ft_strdup(list->u_arg.arg_ptr);
+	else
+		list->str=ft_strdup("(null)");
+	if (list->precision != INT_MIN)
+	{
+		tmp = list->str;
+		list->str=ft_substr(list->str, 0, list->precision);
+		free(tmp);
+	}
+	len = ft_strlen(list->str);
+	if (len < list->width)
+	{
+		list->str = padding(list->str, list->width,
+			list->flags & FLAG_ZERO ? '0' : ' ', list->flags & FLAG_DASH);
+		return (ft_strlen(list->str));
+	}
+	return (len);
 }
 
 static int	convert_p(t_chain *list)

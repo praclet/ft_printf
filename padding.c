@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 13:31:43 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/29 16:36:40 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2020/12/30 10:20:13 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "padding.h"
 #include "libft/libft.h"
 
-char	*padding(char *str, int length, char pad, int right_justified)
+char	*padding(char *str, int length, char pad, int left_justified)
 {
 	int		len_str;
 	char	*res;
@@ -27,7 +27,7 @@ char	*padding(char *str, int length, char pad, int right_justified)
 	res = malloc(sizeof(char) * (length + 1));
 	if (res)
 	{
-		if (right_justified)
+		if (left_justified)
 		{
 			ft_memcpy(res, str, len_str);
 			ft_memset(res + len_str, pad, length - len_str);

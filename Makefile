@@ -41,7 +41,7 @@ all $(NAME)	bonus	:	libft $(patsubst %,$(NAME)(%),$(OBJS))
 
 libft :
 	$(MAKE) -C libft
-	echo 'libft objects added to $(NAME).'
+	echo 'Libft objects added to $(NAME).'
 
 ifneq ($(MAKECMDGOALS),fclean)
 -include $(DEPS)
