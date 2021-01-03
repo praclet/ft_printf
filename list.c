@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 10:52:18 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/29 17:43:33 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/03 09:18:43 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,6 @@ t_chain		*check_list(t_chain *elem)
 			elem->flags &= ~FLAG_SPACE;
 		if (elem->conversion == 'p')
 			elem->modifiers = 0;
-		if (elem->conversion == 'c' || elem->conversion == '%')
-		{
-			elem->flags &= ~FLAG_SHARP & ~FLAG_SPACE & ~FLAG_PLUS;
-			if (elem->width <= 0)
-				elem->width = 1;
-			elem->precision = 1;
-		}
 		elem = elem->next;
 	}
 	return (res);
@@ -86,7 +79,7 @@ char		*list_finish(t_chain *list, int length)
 	char	*res;
 	int		len;
 
-	res = malloc(sizeof(char) * length);
+	res = malloc(sizeof(char) * (length + 1));
 	if (!res)
 		return (NULL);
 	cur = res;

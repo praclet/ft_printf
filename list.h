@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:02:48 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/29 16:28:58 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/03 09:13:14 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@
 # define MODIFIER_LL	2
 # define MODIFIER_H		4
 # define MODIFIER_HH	8
-
-# define CONVERSION		"cspdiuxXnfge%"
 
 typedef struct					s_chain {
 	char						*str;

@@ -19,7 +19,7 @@ RM			:=	rm -f
 ##########################################################
 
 OBJS		:=	$(SRCS:.c=.o)
-DEPS		:=	$(OBJS:.o=.d)
+DEPS		:=	$(SRCS:.c=.d)
 
 .SILENT		:
 .PHONY		:	all clean fclean re libft
@@ -43,11 +43,15 @@ libft :
 	$(MAKE) -C libft
 	echo 'Libft objects added to $(NAME).'
 
+ifneq ($(MAKECMDGOALS),clean)
 ifneq ($(MAKECMDGOALS),fclean)
 -include $(DEPS)
 endif
+endif
 
 clean		:
+	$(MAKE) -C libft clean
+	echo 'Libft files deleted.'
 	$(RM) $(OBJS)
 	echo 'Object files deleted.'
 	$(RM) $(DEPS)

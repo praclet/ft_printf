@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:24:12 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/27 14:58:11 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/03 09:37:27 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,9 @@ static int		parse_text(const char **str,
 	if (start != *str)
 	{
 		*cur = add_element(res, last);
-		if (!(*cur))
-			return (0);
-		(*cur)->str = ft_substr(start, 0, *str - start);
-		if (!(*cur)->str)
+		if (*cur)
+			(*cur)->str = ft_substr(start, 0, *str - start);
+		if (!*cur || !(*cur)->str)
 		{
 			delete_list(*res);
 			*res = NULL;
@@ -62,7 +61,6 @@ static int		parse_text(const char **str,
 			*last = NULL;
 			return (0);
 		}
-		(*cur)->conversion = 's';
 	}
 	return (1);
 }
@@ -145,7 +143,7 @@ void			parse_modifier_conversion(const char **str, t_chain *cur)
 			(*str)++;
 		}
 	}
-	if (ft_strchr(CONVERSION, **str))
+	if (ft_strchr("c%%spdiuxXo", **str))
 	{
 		cur->conversion = **str;
 		(*str)++;
