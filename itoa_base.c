@@ -6,7 +6,7 @@
 /*   By: praclet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 14:19:01 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/03 10:19:35 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/03 15:54:12 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char			*itoa_base(long long int nbr, char *base)
 		if (nbr < 0)
 		{
 			res[0] = '-';
-			uitoa_base_(nbr, base, res + 1, len_nbr - 1);
+			uitoa_base_(tmp, base, res + 1, len_nbr - 1);
 		}
 		else
 			uitoa_base_(tmp, base, res, len_nbr);
