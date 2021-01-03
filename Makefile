@@ -9,7 +9,7 @@ SRCS		:=	conversion.c		\
 				parser.c
 
 CC			:=	gcc
-CFLAGS		:=	-Wall -Wextra -Werror
+CFLAGS		:=	-Wall -Wextra -Werror -g
 
 AR			:=	ar
 ARFLAGS		:=	rs

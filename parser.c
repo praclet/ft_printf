@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:24:12 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/03 09:37:27 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/03 15:15:12 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int		parse_text(const char **str,
 
 static void		parse_flag(const char **str, t_chain *cur)
 {
-	while (ft_strchr("#- +", **str))
+	while (**str && ft_strchr("#- +", **str))
 	{
 		if (**str == '#')
 			cur->flags |= FLAG_SHARP;
@@ -143,7 +143,7 @@ void			parse_modifier_conversion(const char **str, t_chain *cur)
 			(*str)++;
 		}
 	}
-	if (ft_strchr("c%%spdiuxXo", **str))
+	if (**str && ft_strchr("c%%spdiuxXo", **str))
 	{
 		cur->conversion = **str;
 		(*str)++;
