@@ -6,7 +6,7 @@
 /*   By: praclet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 14:19:01 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/30 18:47:30 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/03 10:19:35 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 #include <limits.h>
 #include "libft/libft.h"
 
-static int		digit_nb(long long int nb, int len)
+static int		digit_nb(long long unsigned int nb, int len)
 {
 	int	res;
 
-	res = nb <= 0 ? 2 : 1;
+	res = 1;
 	while (nb /= len)
 		res++;
 	return (res);
@@ -48,46 +48,65 @@ static int		check_base(char *base, int length)
 	return (1);
 }
 
-static void		itoa_base_(long long int nb, char *base, char *res,
+static void		uitoa_base_(long long unsigned int nb, char *base, char *res,
 		int nb_digit)
 {
-	int length;
+	unsigned int length;
 
 	length = ft_strlen(base);
-	if (nb < 0)
-	{
-		*res = '-';
-		itoa_base_(-(nb / length), base, res + 1, nb_digit - 2);
-		itoa_base_(-(nb % length), base, res + nb_digit - 1, 1);
-	}
+	if (nb < length)
+		*res = base[nb];
 	else
 	{
-		if (nb < length)
-			*res = base[nb];
-		else
-		{
-			itoa_base_(nb / length, base, res, nb_digit - 1);
-			itoa_base_(nb % length, base, res + nb_digit - 1, 1);
-		}
+		uitoa_base_(nb / length, base, res, nb_digit - 1);
+		uitoa_base_(nb % length, base, res + nb_digit - 1, 1);
 	}
+}
+
+char			*uitoa_base(long long unsigned int nbr, char *base)
+{
+	char	*res;
+	int		len;
+	int		len_nbr;
+
+	len = ft_strlen(base);
+	if (!check_base(base, len))
+		return (NULL);
+	len_nbr = digit_nb(nbr, len);
+	res = malloc(sizeof(char) * (len_nbr + 1));
+	if (res)
+	{
+		uitoa_base_(nbr, base, res, len_nbr);
+		res[len] = 0;
+	}
+	return (res);
 }
 
 char			*itoa_base(long long int nbr, char *base)
 {
-	int		length;
-	int		nb_digit;
-	char	*res;
+	char					*res;
+	int						len;
+	int						len_nbr;
+	long long unsigned int	tmp;
 
-	length = ft_strlen(base);
-	if (check_base(base, length))
+	len = ft_strlen(base);
+	if (!check_base(base, len))
+		return (NULL);
+	tmp = nbr > 0 ? nbr : -nbr;
+	len_nbr = digit_nb(tmp, len);
+	if (nbr < 0)
+		len_nbr++;
+	res = malloc(sizeof(char) * (len_nbr + 1));
+	if (res)
 	{
-		nb_digit = digit_nb(nbr, length);
-		res = (char *)malloc(sizeof(char) * (nb_digit + 1));
-		if (!res)
-			return (NULL);
-		itoa_base_(nbr, base, res, nb_digit);
-		res[nb_digit] = 0;
-		return (res);
+		if (nbr < 0)
+		{
+			res[0] = '-';
+			uitoa_base_(nbr, base, res + 1, len_nbr - 1);
+		}
+		else
+			uitoa_base_(tmp, base, res, len_nbr);
+		res[len] = 0;
 	}
-	return (NULL);
+	return (res);
 }

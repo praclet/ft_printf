@@ -6,7 +6,7 @@
 /*   By: praclet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 14:19:01 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/30 17:40:21 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/03 10:16:46 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,6 @@
 # define FT_ITOA_BASE_H
 
 char	*itoa_base(long long int nbr, char *base);
+char	*uitoa_base(long long unsigned int nbr, char *base);
 
 #endif
