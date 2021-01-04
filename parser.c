@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:24:12 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/03 15:15:12 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/04 15:22:21 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int		parse_text(const char **str,
 
 static void		parse_flag(const char **str, t_chain *cur)
 {
-	while (**str && ft_strchr("#- +", **str))
+	while (**str && ft_strchr("#- +0", **str))
 	{
 		if (**str == '#')
 			cur->flags |= FLAG_SHARP;
@@ -77,6 +77,8 @@ static void		parse_flag(const char **str, t_chain *cur)
 			cur->flags |= FLAG_SPACE;
 		if (**str == '+')
 			cur->flags |= FLAG_PLUS;
+		if (**str == '0')
+			cur->flags |= FLAG_ZERO;
 		(*str)++;
 	}
 }
@@ -103,7 +105,7 @@ void			parse_prec(const char **str, t_chain *cur)
 
 void			parse_width_prec(const char **str, t_chain *cur)
 {
-	if ((**str >= '0' && **str <= '9') || **str == '*')
+	if ((**str >= '1' && **str <= '9') || **str == '*')
 	{
 		cur->width = 0;
 		if (**str == '*')
@@ -113,11 +115,6 @@ void			parse_width_prec(const char **str, t_chain *cur)
 		}
 		else
 		{
-			if (**str == '0')
-			{
-				(*str)++;
-				cur->flags |= FLAG_ZERO;
-			}
 			while (**str >= '0' && **str <= '9')
 			{
 				cur->width = cur->width * 10 + **str - '0';
