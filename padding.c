@@ -6,39 +6,38 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 13:31:43 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/30 10:20:13 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/04 11:28:06 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include "list.h"
 #include "padding.h"
 #include "libft/libft.h"
 
-char	*padding(char *str, int length, char pad, int left_justified)
+int	padding(t_chain *list, int len_str)
 {
-	int		len_str;
 	char	*res;
+	char	pad;
 
-	if (!str || !pad || length <= 0)
-		return (str);
-	len_str = ft_strlen(str);
-	if (length <= len_str)
-		return (str);
-	res = malloc(sizeof(char) * (length + 1));
-	if (res)
+	if (list->width <= len_str)
+		return (1);
+	res = malloc(sizeof(char) * (list->width + 1));
+	if (!res)
+		return (-1);
+	pad = list->flags & FLAG_ZERO ? '0' : ' ';
+	if (list->flags & FLAG_DASH)
 	{
-		if (left_justified)
-		{
-			ft_memcpy(res, str, len_str);
-			ft_memset(res + len_str, pad, length - len_str);
-		}
-		else
-		{
-			ft_memset(res, pad, length - len_str);
-			ft_memcpy(res + length - len_str, str, len_str);
-		}
-		res[length] = 0;
-		free(str);
+		ft_memcpy(res, list->str, len_str);
+		ft_memset(res + len_str, pad, list->width - len_str);
 	}
-	return (res);
+	else
+	{
+		ft_memset(res, pad, list->width - len_str);
+		ft_memcpy(res + list->width - len_str, list->str, len_str);
+	}
+	res[list->width] = 0;
+	free(list->str);
+	list->str = res;
+	return (1);
 }

@@ -6,13 +6,15 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 13:31:43 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/30 10:20:25 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/04 11:27:32 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PADDING_H
 # define PADDING_H
 
-char	*padding(char *str, int length, char pad, int left_justified);
+#include "list.h"
+
+int	padding(t_chain *list, int length);
 
 #endif
