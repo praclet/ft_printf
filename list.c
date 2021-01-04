@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 10:52:18 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/03 09:18:43 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/04 11:38:54 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,10 @@ char		*list_finish(t_chain *list, int length)
 	{
 		if (list->str)
 		{
-			len = ft_strlen(list->str);
+			if (list->conversion == 'c')
+				len = list->width > 0 ? list->width : 1;
+			else
+				len = ft_strlen(list->str);
 			ft_memcpy(cur, list->str, len);
 			cur += len;
 		}
