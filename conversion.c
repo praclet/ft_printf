@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 14:37:52 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/04 16:03:39 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/04 16:54:14 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,9 @@ static int	convert_d(t_chain *list)
 	list->str = itoa_base(list->u_arg.arg_llint, "0123456789");
 	if (!list->str)
 		return (-1);
+	if (padding(list, ft_strlen(list->str)) < 0)
+		return (-1);
 	return (ft_strlen(list->str));
-}
-
-static int	convert_i(t_chain *list)
-{
-	(void)list;
-	return (0);
 }
 
 static int	convert_u(t_chain *list)
@@ -102,8 +98,6 @@ static int	convert_(t_chain *list)
 		return (convert_p(list));
 	if (list->conversion == 'd')
 		return (convert_d(list));
-	if (list->conversion == 'i')
-		return (convert_i(list));
 	if (list->conversion == 'u')
 		return (convert_u(list));
 	if (list->conversion == 'x' || list->conversion == 'X')

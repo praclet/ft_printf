@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 10:52:18 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/04 15:29:29 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/04 16:40:07 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ t_chain		*check_list(t_chain *elem)
 		if ((elem->conversion == 'c' || elem->conversion == '%')
 			&& elem->width < 0)
 			elem->width = 1;
+		if (elem->conversion == 'i')
+			elem->conversion = 'd';
 		elem = elem->next;
 	}
 	return (res);
