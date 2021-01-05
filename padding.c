@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 13:31:43 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/05 15:40:35 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/05 17:19:10 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,20 @@ int	padding_number(t_chain *list, int len_str)
 	int		len;
 
 	str = list->str;
-	if (list->width >= len_str && 
-			((list->str[0] == '-' && list->precision >= len_str - 1)
-			|| (list->str[0] != '-' && list->precision >= len_str)))
+	if (list->width <= len_str && 
+			((list->str[0] == '-' && list->precision <= len_str - 1)
+			|| (list->str[0] != '-' && list->precision <= len_str)))
 		return (1);
 	if (list->str[0] == '-')
 	{
 		str++;
 		len_str--;
 	}
-	len = list->width > list->precision ? list->width : list->precision;
-	if (list->str[0] == '-' && len_str > list->precision 
-			&& len_str + 1 < list->width)
+	len = list->precision;
+	if (list->str[0] == '-')
 		len++;
+	if (len <= list->width)
+		len = list->width;
 	res = malloc(sizeof(char) * (len + 1));
 	if (!res)
 		return (-1);
