@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 13:31:43 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/06 11:43:06 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/06 16:05:45 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "list.h"
 #include "padding.h"
 #include "libft/libft.h"
+#include "itoa_base.h"
 
 int		padding(t_chain *list, int len_str)
 {
@@ -44,8 +45,12 @@ int		padding(t_chain *list, int len_str)
 
 int		padding_di(t_chain *list, int len_str)
 {
-	(void)list;
+	char	*res;
+
 	(void)len_str;
+	res = malloc(sizeof(char) * digit_nb(list->u_arg.arg_llint < 0
+				? -list->u_arg.arg_llint : list->u_arg.arg_llint, 10));
+	itoa_base(list->u_arg.arg_llint, "0123456789", res);
 	return (1);
 }
 

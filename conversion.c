@@ -6,11 +6,12 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 14:37:52 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/04 16:54:14 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/06 16:03:22 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <limits.h>
+#include <stdlib.h>
 #include "list.h"
 #include "padding.h"
 #include "libft/libft.h"
@@ -60,12 +61,9 @@ static int	convert_p(t_chain *list)
 	return (0);
 }
 
-static int	convert_d(t_chain *list)
+static int	convert_di(t_chain *list)
 {
-	list->str = itoa_base(list->u_arg.arg_llint, "0123456789");
-	if (!list->str)
-		return (-1);
-	if (padding(list, ft_strlen(list->str)) < 0)
+	if (!list->str && padding_di(list, ft_strlen(list->str)) < 0)
 		return (-1);
 	return (ft_strlen(list->str));
 }
@@ -96,8 +94,8 @@ static int	convert_(t_chain *list)
 		return (convert_s(list));
 	if (list->conversion == 'p')
 		return (convert_p(list));
-	if (list->conversion == 'd')
-		return (convert_d(list));
+	if (list->conversion == 'd' || list->conversion == 'i')
+		return (convert_di(list));
 	if (list->conversion == 'u')
 		return (convert_u(list));
 	if (list->conversion == 'x' || list->conversion == 'X')
