@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 13:31:43 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/05 17:19:10 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/05 17:50:40 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	padding_di(t_chain *list, int len_str)
 int	padding_number(t_chain *list, int len_str)
 {
 	char	*str;
+	char *res;
 	int		len;
 
 	str = list->str;
@@ -73,6 +74,7 @@ int	padding_number(t_chain *list, int len_str)
 	res = malloc(sizeof(char) * (len + 1));
 	if (!res)
 		return (-1);
+/*	
 	if ()
 	{
 		;
@@ -81,5 +83,6 @@ int	padding_number(t_chain *list, int len_str)
 	{
 		;
 	}
+*/
 	return (1);
 }
