@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 13:31:43 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/05 17:50:40 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/06 11:43:06 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "padding.h"
 #include "libft/libft.h"
 
-int	padding(t_chain *list, int len_str)
+int		padding(t_chain *list, int len_str)
 {
 	char	*res;
 	char	pad;
@@ -42,30 +42,55 @@ int	padding(t_chain *list, int len_str)
 	return (1);
 }
 
-int	padding_di(t_chain *list, int len_str)
+int		padding_di(t_chain *list, int len_str)
 {
 	(void)list;
 	(void)len_str;
 	return (1);
 }
 
-
-int	padding_number(t_chain *list, int len_str)
+void	padding_number_(t_chain *list, int len_str, char *res, int len)
 {
 	char	*str;
-	char *res;
-	int		len;
+	int		sgn;
 
 	str = list->str;
-	if (list->width <= len_str && 
-			((list->str[0] == '-' && list->precision <= len_str - 1)
-			|| (list->str[0] != '-' && list->precision <= len_str)))
-		return (1);
 	if (list->str[0] == '-')
 	{
 		str++;
 		len_str--;
 	}
+	sgn = list->flags & (FLAG_SPACE | FLAG_PLUS) || list->str[0] == '-' ? 1 : 0;
+	if (list->flags & FLAG_DASH)
+	{
+		if (sgn)
+		{
+			if (list->flags & FLAG_SPACE)
+				*res = ' ';
+			if (list->flags & FLAG_PLUS)
+				*res = '+';
+			if (list->str[0] == '-')
+				*res = '-';
+		}
+		ft_memcpy(res + sgn, str, len_str);
+		ft_memset(res + sgn + len_str, ' ', len - sgn - len_str);
+	}
+	else
+	{
+		;
+	}
+}
+
+int		padding_number(t_chain *list, int len_str)
+{
+	char	*res;
+	char	*tmp;
+	int		len;
+
+	if (list->width <= len_str &&
+		((list->str[0] == '-' && list->precision <= len_str - 1)
+		|| (list->str[0] != '-' && list->precision <= len_str)))
+		return (1);
 	len = list->precision;
 	if (list->str[0] == '-')
 		len++;
@@ -74,15 +99,10 @@ int	padding_number(t_chain *list, int len_str)
 	res = malloc(sizeof(char) * (len + 1));
 	if (!res)
 		return (-1);
-/*	
-	if ()
-	{
-		;
-	}
-	else
-	{
-		;
-	}
-*/
+	padding_number_(list, len_str, res, len);
+	res[len] = 0;
+	tmp = list->str;
+	list->str = res;
+	free(tmp);
 	return (1);
 }
