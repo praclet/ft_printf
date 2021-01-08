@@ -6,7 +6,7 @@
 /*   By: praclet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 14:19:01 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/06 13:08:40 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/06 17:21:24 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "itoa_base.h"
 #include "libft/libft.h"
 
-int			digit_nb(long long unsigned int nb, int len)
+int			digit_unb(long long unsigned int nb, int len)
 {
 	int	res;
 
@@ -23,6 +23,14 @@ int			digit_nb(long long unsigned int nb, int len)
 	while (nb /= len)
 		res++;
 	return (res);
+}
+
+int			digit_nb(long long int nb, int len)
+{
+	if (nb >= 0)
+		return (digit_unb(nb, len));
+	else
+		return (digit_unb(-nb, len) + 1);
 }
 
 static int	check_base(char *base, int length)
@@ -72,7 +80,7 @@ void		uitoa_base(long long unsigned int nbr, char *base, char *res)
 	len = ft_strlen(base);
 	if (!check_base(base, len))
 		return ;
-	len_nbr = digit_nb(nbr, len);
+	len_nbr = digit_unb(nbr, len);
 	uitoa_base_(nbr, base, res, len_nbr);
 	res[len_nbr] = 0;
 }

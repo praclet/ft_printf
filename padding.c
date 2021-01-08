@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 13:31:43 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/06 16:05:45 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/08 13:57:03 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,43 +46,55 @@ int		padding(t_chain *list, int len_str)
 int		padding_di(t_chain *list, int len_str)
 {
 	char	*res;
+	int		len;
 
 	(void)len_str;
-	res = malloc(sizeof(char) * digit_nb(list->u_arg.arg_llint < 0
-				? -list->u_arg.arg_llint : list->u_arg.arg_llint, 10));
+	len = digit_nb(list->u_arg.arg_llint, 10);
+	res = malloc(sizeof(char) * len);
+	if (!res)
+		return (-1);
 	itoa_base(list->u_arg.arg_llint, "0123456789", res);
 	return (1);
 }
 
 void	padding_number_(t_chain *list, int len_str, char *res, int len)
 {
-	char	*str;
-	int		sgn;
+	int	sgn;
+	int	pos;
+	int	width;
+	int	prec;
 
-	str = list->str;
-	if (list->str[0] == '-')
-	{
-		str++;
-		len_str--;
-	}
 	sgn = list->flags & (FLAG_SPACE | FLAG_PLUS) || list->str[0] == '-' ? 1 : 0;
+	pos = 0;
+	width = 0;
+	prec = 0;
+	if (len_str < list->precision)
+	{
+		prec = list->precision - len_str;
+		if (list->width > list->precision + sgn)
+			width = list->width - list->precision - sgn;
+	}
+	else
+		if (list->width > len_str + sgn)
+			width = list->width - len_str - sgn;
 	if (list->flags & FLAG_DASH)
 	{
-		if (sgn)
-		{
-			if (list->flags & FLAG_SPACE)
-				*res = ' ';
-			if (list->flags & FLAG_PLUS)
-				*res = '+';
-			if (list->str[0] == '-')
-				*res = '-';
-		}
-		ft_memcpy(res + sgn, str, len_str);
+		pos = 0;
 		ft_memset(res + sgn + len_str, ' ', len - sgn - len_str);
+		ft_memset(res + sgn + len_str, '0', len - sgn - len_str);
 	}
 	else
 	{
-		;
+		pos = width;
+	}
+	if (sgn)
+	{
+		if (list->flags & FLAG_SPACE)
+			res[pos] = ' ';
+		if (list->flags & FLAG_PLUS)
+			res[pos] = '+';
+		if (list->str[0] == '-')
+			res[pos] = '-';
 	}
 }
 
