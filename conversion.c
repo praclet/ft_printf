@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 14:37:52 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/08 15:44:33 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/08 17:42:36 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	convert_p(t_chain *list)
 
 static int	convert_di(t_chain *list)
 {
-	if (!list->str || padding_di(list) < 0)
+	if (padding_di(list) < 0)
 		return (-1);
 	return (ft_strlen(list->str));
 }

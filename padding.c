@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 13:31:43 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/08 17:02:26 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/08 18:18:38 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ int	padding_di(t_chain *list)
 		else
 			len_str = len;
 	}
-	sgn = list->flags & (FLAG_SPACE | FLAG_PLUS) || list->str[0] == '-' ? 1 : 0;
+	sgn = list->flags & (FLAG_SPACE | FLAG_PLUS) 
+		|| list->u_arg.arg_llint < 0 ? 1 : 0;
 	len_str += sgn;
 	res = malloc(sizeof(char) * len_str);
 	list->str = res;
@@ -112,5 +113,5 @@ int	padding_di(t_chain *list)
 		if (list->str[0] == '-')
 			res[pos] = '-';
 	}
-	return (len_str);
+	return (1);
 }
