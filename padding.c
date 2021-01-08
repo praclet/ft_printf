@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 13:31:43 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/08 13:57:03 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/08 17:02:26 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "libft/libft.h"
 #include "itoa_base.h"
 
-int		padding(t_chain *list, int len_str)
+int	padding(t_chain *list, int len_str)
 {
 	char	*res;
 	char	pad;
@@ -43,28 +43,38 @@ int		padding(t_chain *list, int len_str)
 	return (1);
 }
 
-int		padding_di(t_chain *list, int len_str)
+int	padding_di(t_chain *list)
 {
 	char	*res;
+	int		sgn;
+	int		pos;
+	int		width;
+	int		prec;
 	int		len;
+	int		len_str;
 
-	(void)len_str;
 	len = digit_nb(list->u_arg.arg_llint, 10);
-	res = malloc(sizeof(char) * len);
+	if (list->precision > list->width)
+	{
+		if (list->precision > len)
+			len_str = list->precision;
+		else
+			len_str = len;
+	}
+	else
+	{
+		if (list->width > len)
+			len_str = list->width;
+		else
+			len_str = len;
+	}
+	sgn = list->flags & (FLAG_SPACE | FLAG_PLUS) || list->str[0] == '-' ? 1 : 0;
+	len_str += sgn;
+	res = malloc(sizeof(char) * len_str);
+	list->str = res;
 	if (!res)
 		return (-1);
-	itoa_base(list->u_arg.arg_llint, "0123456789", res);
-	return (1);
-}
-
-void	padding_number_(t_chain *list, int len_str, char *res, int len)
-{
-	int	sgn;
-	int	pos;
-	int	width;
-	int	prec;
-
-	sgn = list->flags & (FLAG_SPACE | FLAG_PLUS) || list->str[0] == '-' ? 1 : 0;
+	res[len_str] = 0;
 	pos = 0;
 	width = 0;
 	prec = 0;
@@ -75,17 +85,23 @@ void	padding_number_(t_chain *list, int len_str, char *res, int len)
 			width = list->width - list->precision - sgn;
 	}
 	else
+	{
 		if (list->width > len_str + sgn)
 			width = list->width - len_str - sgn;
+	}
 	if (list->flags & FLAG_DASH)
 	{
 		pos = 0;
-		ft_memset(res + sgn + len_str, ' ', len - sgn - len_str);
-		ft_memset(res + sgn + len_str, '0', len - sgn - len_str);
+		ft_memset(res + sgn, '0', prec);
+		itoa_base(list->u_arg.arg_llint, "0123456789", res + sgn + prec);
+		ft_memset(res + sgn + prec + len, ' ', width);
 	}
 	else
 	{
 		pos = width;
+		ft_memset(res, ' ', width);
+		ft_memset(res + sgn + width, '0', prec);
+		itoa_base(list->u_arg.arg_llint, "0123456789", res + sgn + width + prec);
 	}
 	if (sgn)
 	{
@@ -96,30 +112,5 @@ void	padding_number_(t_chain *list, int len_str, char *res, int len)
 		if (list->str[0] == '-')
 			res[pos] = '-';
 	}
-}
-
-int		padding_number(t_chain *list, int len_str)
-{
-	char	*res;
-	char	*tmp;
-	int		len;
-
-	if (list->width <= len_str &&
-		((list->str[0] == '-' && list->precision <= len_str - 1)
-		|| (list->str[0] != '-' && list->precision <= len_str)))
-		return (1);
-	len = list->precision;
-	if (list->str[0] == '-')
-		len++;
-	if (len <= list->width)
-		len = list->width;
-	res = malloc(sizeof(char) * (len + 1));
-	if (!res)
-		return (-1);
-	padding_number_(list, len_str, res, len);
-	res[len] = 0;
-	tmp = list->str;
-	list->str = res;
-	free(tmp);
-	return (1);
+	return (len_str);
 }
