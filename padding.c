@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 13:31:43 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/08 18:18:38 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/10 09:46:43 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,9 @@ int	padding_di(t_chain *list)
 		else
 			len_str = len;
 	}
-	sgn = list->flags & (FLAG_SPACE | FLAG_PLUS) 
-		|| list->u_arg.arg_llint < 0 ? 1 : 0;
+	sgn = list->flags & (FLAG_SPACE | FLAG_PLUS | FLAG_NEG);
 	len_str += sgn;
-	res = malloc(sizeof(char) * len_str);
+	res = malloc(sizeof(char) * (len_str + 1));
 	list->str = res;
 	if (!res)
 		return (-1);
@@ -79,22 +78,21 @@ int	padding_di(t_chain *list)
 	pos = 0;
 	width = 0;
 	prec = 0;
-	if (len_str < list->precision)
+	if (len - sgn < list->precision)
 	{
-		prec = list->precision - len_str;
+		prec = list->precision - len + sgn;
 		if (list->width > list->precision + sgn)
 			width = list->width - list->precision - sgn;
 	}
 	else
 	{
-		if (list->width > len_str + sgn)
-			width = list->width - len_str - sgn;
+		if (list->width > len + sgn)
+			width = list->width - len - sgn;
 	}
 	if (list->flags & FLAG_DASH)
 	{
-		pos = 0;
 		ft_memset(res + sgn, '0', prec);
-		itoa_base(list->u_arg.arg_llint, "0123456789", res + sgn + prec);
+		itoa_base(list->u_arg.arg_ullint, "0123456789", res + sgn + prec);
 		ft_memset(res + sgn + prec + len, ' ', width);
 	}
 	else
@@ -102,7 +100,7 @@ int	padding_di(t_chain *list)
 		pos = width;
 		ft_memset(res, ' ', width);
 		ft_memset(res + sgn + width, '0', prec);
-		itoa_base(list->u_arg.arg_llint, "0123456789", res + sgn + width + prec);
+		itoa_base(list->u_arg.arg_ullint, "0123456789", res + sgn + width + prec);
 	}
 	if (sgn)
 	{
@@ -110,7 +108,7 @@ int	padding_di(t_chain *list)
 			res[pos] = ' ';
 		if (list->flags & FLAG_PLUS)
 			res[pos] = '+';
-		if (list->str[0] == '-')
+		if (list->flags & FLAG_NEG)
 			res[pos] = '-';
 	}
 	return (1);

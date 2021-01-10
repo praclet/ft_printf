@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 12:51:58 by praclet           #+#    #+#             */
-/*   Updated: 2020/12/30 13:36:59 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/10 09:45:22 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,25 @@
 
 static void	affectation_di(t_chain *list, va_list ap)
 {
+	long long int	tmp;
+
 	if (!list->modifiers)
-		list->u_arg.arg_llint = (int)va_arg(ap, int);
+		tmp = (int)va_arg(ap, int);
 	if (list->modifiers & MODIFIER_L)
-		list->u_arg.arg_llint = (long int)va_arg(ap, long int);
+		tmp = (long int)va_arg(ap, long int);
 	if (list->modifiers & MODIFIER_LL)
-		list->u_arg.arg_llint = (long long int)va_arg(ap, long long int);
+		tmp = (long long int)va_arg(ap, long long int);
 	if (list->modifiers & MODIFIER_H)
-		list->u_arg.arg_llint = (short int)va_arg(ap, int);
+		tmp = (short int)va_arg(ap, int);
 	if (list->modifiers & MODIFIER_HH)
-		list->u_arg.arg_llint = (signed char)va_arg(ap, int);
+		tmp = (signed char)va_arg(ap, int);
+	if (tmp < 0)
+	{
+		list->u_arg.arg_ullint = -tmp;
+		list->flags |= FLAG_NEG;
+	}
+	else
+		list->u_arg.arg_ullint = tmp;
 }
 
 static void	affectation_uoxx(t_chain *list, va_list ap)

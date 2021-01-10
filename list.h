@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:02:48 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/03 09:13:14 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/10 09:41:08 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define FLAG_DASH		4
 # define FLAG_SPACE		8
 # define FLAG_PLUS		16
+# define FLAG_NEG		32
 
 # define MODIFIER_L		1
 # define MODIFIER_LL	2
@@ -30,7 +31,6 @@ typedef struct					s_chain {
 	char						*str;
 	union
 	{
-		long long int			arg_llint;
 		unsigned long long int	arg_ullint;
 		double					arg_double;
 		int						arg_int;
