@@ -1,6 +1,7 @@
 NAME		:=	libftprintf.a
 
 SRCS		:=	conversion.c		\
+				conversion2.c		\
 				arg_affectation.c	\
 				ft_printf.c			\
 				itoa_base.c			\

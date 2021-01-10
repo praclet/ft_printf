@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   conversion2.h                                      :+:      :+:    :+:   */
+/*   parser2.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/27 13:31:43 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/10 16:45:39 by praclet          ###   ########lyon.fr   */
+/*   Created: 2020/12/14 11:24:12 by praclet           #+#    #+#             */
+/*   Updated: 2021/01/10 16:56:47 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONVERSION2_H
-# define CONVERSION2_H
+#ifndef PARSER2_H
+# define PARSER2_H
 
 # include "list.h"
 
-int	convert_number_(t_chain *list);
+int		parse_text(const char **str, t_chain **res, t_chain **cur,
+		t_chain **last);
+t_chain	*add_element(t_chain **res, t_chain **last);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 13:31:43 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/10 16:33:50 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/10 16:46:25 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "libft/libft.h"
 #include "itoa_base.h"
 
-int	padding_number(t_chain *list)
+int	convert_number_(t_chain *list)
 {
 	char	*res;
 	int		sgn;
