@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 14:37:52 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/08 17:42:36 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/10 11:04:16 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,11 @@ static int	convert_p(t_chain *list)
 	return (0);
 }
 
-static int	convert_di(t_chain *list)
+static int	convert_diu(t_chain *list)
 {
-	if (padding_di(list) < 0)
+	if (padding_number(list) < 0)
 		return (-1);
 	return (ft_strlen(list->str));
-}
-
-static int	convert_u(t_chain *list)
-{
-	(void)list;
-	return (0);
 }
 
 static int	convert_o(t_chain *list)
@@ -94,10 +88,9 @@ static int	convert_(t_chain *list)
 		return (convert_s(list));
 	if (list->conversion == 'p')
 		return (convert_p(list));
-	if (list->conversion == 'd' || list->conversion == 'i')
-		return (convert_di(list));
-	if (list->conversion == 'u')
-		return (convert_u(list));
+	if (list->conversion == 'd' || list->conversion == 'i'
+			|| list->conversion == 'u')
+		return (convert_diu(list));
 	if (list->conversion == 'x' || list->conversion == 'X')
 		return (convert_xx(list));
 	if (list->conversion == 'o')

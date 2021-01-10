@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 10:52:18 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/08 15:02:59 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/10 12:41:39 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,10 @@ t_chain		*check_list(t_chain *elem)
 			elem->width = 1;
 		if (elem->conversion == 'i')
 			elem->conversion = 'd';
-		if (ft_strchr("diouxX", elem->conversion))
-		{
-			if (elem->precision != INT_MIN)
-				elem->flags &= ~FLAG_ZERO;
-			if (elem->flags & FLAG_ZERO && elem->precision < elem->width)
-				elem->precision = elem->width;
-		}
+		if (ft_strchr("diouxX", elem->conversion) && elem->precision != INT_MIN)
+			elem->flags &= ~FLAG_ZERO;
+		if (ft_strchr("pxX", elem->conversion))
+			elem->flags &= ~FLAG_SPACE | ~FLAG_PLUS | ~FLAG_NEG;
 		elem = elem->next;
 	}
 	return (res);

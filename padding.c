@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 13:31:43 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/10 09:46:43 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/10 13:22:47 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,33 +43,47 @@ int	padding(t_chain *list, int len_str)
 	return (1);
 }
 
-int	padding_di(t_chain *list)
+int	padding_number(t_chain *list)
 {
 	char	*res;
 	int		sgn;
+	int		zero_x;
 	int		pos;
 	int		width;
 	int		prec;
 	int		len;
 	int		len_str;
+	char	*base;
 
-	len = digit_nb(list->u_arg.arg_llint, 10);
+	if (list->conversion == 'd' || list->conversion == 'i')
+		base = "0123456789";
+	if (list->conversion == 'o')
+		base = "01234567";
+	if (list->conversion == 'x')
+		base = "0123456789abcdef";
+	if (list->conversion == 'X')
+		base = "0123456789ABCDEF";
+	len = digit_unb(list->u_arg.arg_ullint, ft_strlen(base));
+	sgn = !!(list->flags & (FLAG_SPACE | FLAG_PLUS | FLAG_NEG));
+	zero_x = (ft_strchr("xX",list->conversion) && (list->flags & FLAG_SHARP))
+		|| list->conversion == 'p';
+	if (list->flags & FLAG_ZERO && list->precision - zero_x < list->width)
+		list->precision = list->width - sgn - zero_x * 2;
 	if (list->precision > list->width)
 	{
 		if (list->precision > len)
 			len_str = list->precision;
 		else
 			len_str = len;
+		len_str += sgn + zero_x * 2;
 	}
 	else
 	{
-		if (list->width > len)
+		if (list->width > len + sgn + zero_x * 2)
 			len_str = list->width;
 		else
-			len_str = len;
+			len_str = len + sgn + zero_x * 2;
 	}
-	sgn = list->flags & (FLAG_SPACE | FLAG_PLUS | FLAG_NEG);
-	len_str += sgn;
 	res = malloc(sizeof(char) * (len_str + 1));
 	list->str = res;
 	if (!res)
@@ -78,29 +92,42 @@ int	padding_di(t_chain *list)
 	pos = 0;
 	width = 0;
 	prec = 0;
-	if (len - sgn < list->precision)
+	if (len - sgn - zero_x * 2 < list->precision)
 	{
-		prec = list->precision - len + sgn;
-		if (list->width > list->precision + sgn)
-			width = list->width - list->precision - sgn;
+		prec = list->precision - len;
+		if (list->width > list->precision + sgn + zero_x * 2)
+			width = list->width - list->precision - sgn - zero_x * 2;
 	}
 	else
 	{
-		if (list->width > len + sgn)
-			width = list->width - len - sgn;
+		if (list->width > len + sgn + zero_x * 2)
+			width = list->width - len - sgn - zero_x * 2;
 	}
 	if (list->flags & FLAG_DASH)
 	{
-		ft_memset(res + sgn, '0', prec);
-		itoa_base(list->u_arg.arg_ullint, "0123456789", res + sgn + prec);
-		ft_memset(res + sgn + prec + len, ' ', width);
+		ft_memset(res + sgn + zero_x * 2, '0', prec);
+		if (list->u_arg.arg_ullint == 0 && list->precision == 0)
+			res[sgn + zero_x * 2 + prec] = list->width > 0 ? ' ' : 0;
+		else
+			uitoa_base(list->u_arg.arg_ullint, base,
+				   res + zero_x * 2 + sgn + prec);
+		ft_memset(res + zero_x * 2 + sgn + prec + len, ' ', width);
 	}
 	else
 	{
 		pos = width;
 		ft_memset(res, ' ', width);
-		ft_memset(res + sgn + width, '0', prec);
-		itoa_base(list->u_arg.arg_ullint, "0123456789", res + sgn + width + prec);
+		ft_memset(res +  zero_x * 2 + sgn + width, '0', prec);
+		if (list->u_arg.arg_ullint == 0 && list->precision == 0)
+			res[sgn + zero_x * 2 + width + prec] = list->width > 0 ? ' ' : 0;
+		else
+			uitoa_base(list->u_arg.arg_ullint, base,
+					res + zero_x * 2 + sgn + width + prec);
+	}
+	if (zero_x)
+	{
+		res[pos] = '0';
+		res[pos + 1] = list->conversion;
 	}
 	if (sgn)
 	{
