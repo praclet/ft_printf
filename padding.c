@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 13:31:43 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/10 15:56:21 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/10 16:13:16 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,7 @@ int	padding_number(t_chain *list)
 	if (list->flags & FLAG_DASH)
 	{
 		ft_memset(res + sgn + zero_x * 2, '0', prec);
-		if (list->u_arg.arg_ullint == 0 && list->precision == 0)
-			res[sgn + zero_x * 2 + prec] = list->width > 0 ? ' ' : 0;
-		else
+		if (list->precision || list->u_arg.arg_ullint)
 			uitoa_base(list->u_arg.arg_ullint, base,
 				res + zero_x * 2 + sgn + prec);
 		ft_memset(res + zero_x * 2 + sgn + prec + len, ' ', width);
@@ -124,9 +122,7 @@ int	padding_number(t_chain *list)
 		pos = width;
 		ft_memset(res, ' ', width);
 		ft_memset(res + zero_x * 2 + sgn + width, '0', prec);
-		if (list->u_arg.arg_ullint == 0 && list->precision == 0)
-			res[sgn + zero_x * 2 + width + prec] = list->width > 0 ? ' ' : 0;
-		else
+		if (list->precision || list->u_arg.arg_ullint)
 			uitoa_base(list->u_arg.arg_ullint, base,
 					res + zero_x * 2 + sgn + width + prec);
 	}

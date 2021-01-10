@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 14:29:58 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/10 15:04:55 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/10 16:07:44 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	ft_printf(const char *str, ...)
 		return (-1);
 	}
 	tmp = list_finish(list, len);
-	delete_list(list);
 	if (tmp)
 	{
 		write(1, tmp, len);
