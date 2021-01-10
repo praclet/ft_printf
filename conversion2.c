@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 13:31:43 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/10 16:46:25 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/10 18:32:17 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,104 +17,119 @@
 #include "libft/libft.h"
 #include "itoa_base.h"
 
-int	convert_number_(t_chain *list)
+static void	base(t_chain *list, t_carac *carac)
 {
-	char	*res;
-	int		sgn;
-	int		zero_x;
-	int		pos;
-	int		width;
-	int		prec;
-	int		len;
-	int		len_str;
-	char	*base;
-
 	if (list->conversion == 'd' || list->conversion == 'i'
 			|| list->conversion == 'u')
-		base = "0123456789";
+		carac->base = "0123456789";
 	if (list->conversion == 'o')
-		base = "01234567";
+		carac->base = "01234567";
 	if (list->conversion == 'x' || list->conversion == 'p')
-		base = "0123456789abcdef";
+		carac->base = "0123456789abcdef";
 	if (list->conversion == 'X')
-		base = "0123456789ABCDEF";
+		carac->base = "0123456789ABCDEF";
 	if (list->precision == 0 && list->u_arg.arg_ullint == 0)
-		len = 0;
+		carac->len = 0;
 	else
-		len = digit_unb(list->u_arg.arg_ullint, ft_strlen(base));
-	sgn = !!(list->flags & (FLAG_SPACE | FLAG_PLUS | FLAG_NEG));
-	zero_x = (ft_strchr("xX", list->conversion) && (list->flags & FLAG_SHARP)
-			&& list->u_arg.arg_ullint) || list->conversion == 'p';
-	if (list->flags & FLAG_ZERO &&
-		(list->precision == INT_MIN || list->precision - zero_x < list->width))
-		list->precision = list->width - sgn - zero_x * 2;
+		carac->len = digit_unb(list->u_arg.arg_ullint, ft_strlen(carac->base));
+	carac->sgn = !!(list->flags & (FLAG_SPACE | FLAG_PLUS | FLAG_NEG));
+	carac->zero_x = (ft_strchr("xX", list->conversion)
+		&& (list->flags & FLAG_SHARP) && list->u_arg.arg_ullint)
+		|| list->conversion == 'p';
+	if (list->flags & FLAG_ZERO && (list->precision == INT_MIN
+			|| list->precision - carac->zero_x < list->width))
+		list->precision = list->width - carac->sgn - carac->zero_x * 2;
+}
+
+void		allocation(t_chain *list, t_carac *carac)
+{
 	if (list->precision > list->width)
 	{
-		if (list->precision > len)
-			len_str = list->precision;
+		if (list->precision > carac->len)
+			carac->len_str = list->precision;
 		else
-			len_str = len;
-		len_str += sgn + zero_x * 2;
+			carac->len_str = carac->len;
+		carac->len_str += carac->sgn + carac->zero_x * 2;
 	}
 	else
 	{
-		if (list->width > len + sgn + zero_x * 2)
-			len_str = list->width;
+		if (list->width > carac->len + carac->sgn + carac->zero_x * 2)
+			carac->len_str = list->width;
 		else
-			len_str = len + sgn + zero_x * 2;
+			carac->len_str = carac->len + carac->sgn + carac->zero_x * 2;
 	}
-	res = malloc(sizeof(char) * (len_str + 1));
-	list->str = res;
-	if (!res)
-		return (-1);
-	res[len_str] = 0;
-	pos = 0;
-	width = 0;
-	prec = 0;
-	if (len < list->precision)
+	list->str = malloc(sizeof(char) * (carac->len_str + 1));
+}
+
+void		calculation(t_chain *list, t_carac *carac)
+{
+	carac->pos = 0;
+	carac->width = 0;
+	carac->prec = 0;
+	if (carac->len < list->precision)
 	{
-		prec = list->precision - len;
-		if (list->width > list->precision + sgn + zero_x * 2)
-			width = list->width - list->precision - sgn - zero_x * 2;
+		carac->prec = list->precision - carac->len;
+		if (list->width > list->precision + carac->sgn + carac->zero_x * 2)
+			carac->width = list->width - list->precision
+				- carac->sgn - carac->zero_x * 2;
 	}
 	else
 	{
-		if (list->width > len + sgn + zero_x * 2)
-			width = list->width - len - sgn - zero_x * 2;
+		if (list->width > carac->len + carac->sgn + carac->zero_x * 2)
+			carac->width = list->width
+				- carac->len - carac->sgn - carac->zero_x * 2;
 	}
+}
+
+void		padding_number(t_chain *list, t_carac *carac)
+{
 	if (list->flags & FLAG_DASH)
 	{
-		ft_memset(res + sgn + zero_x * 2, '0', prec);
+		ft_memset(list->str + carac->sgn + carac->zero_x * 2, '0', carac->prec);
 		if (list->precision || list->u_arg.arg_ullint)
-			uitoa_base(list->u_arg.arg_ullint, base,
-				res + zero_x * 2 + sgn + prec);
-		ft_memset(res + zero_x * 2 + sgn + prec + len, ' ', width);
+			uitoa_base(list->u_arg.arg_ullint, carac->base,
+				list->str + carac->zero_x * 2 + carac->sgn + carac->prec);
+		ft_memset(list->str + carac->zero_x * 2 + carac->sgn + carac->prec
+				+ carac->len, ' ', carac->width);
 	}
 	else
 	{
-		pos = width;
-		ft_memset(res, ' ', width);
-		ft_memset(res + zero_x * 2 + sgn + width, '0', prec);
+		carac->pos = carac->width;
+		ft_memset(list->str, ' ', carac->width);
+		ft_memset(list->str + carac->zero_x * 2 + carac->sgn + carac->width,
+			'0', carac->prec);
 		if (list->precision || list->u_arg.arg_ullint)
-			uitoa_base(list->u_arg.arg_ullint, base,
-					res + zero_x * 2 + sgn + width + prec);
+			uitoa_base(list->u_arg.arg_ullint, carac->base,
+				list->str + carac->zero_x * 2 + carac->sgn + carac->width
+				+ carac->prec);
 	}
-	if (zero_x)
+}
+
+int			convert_number_(t_chain *list)
+{
+	t_carac	carac;
+
+	base(list, &carac);
+	allocation(list, &carac);
+	if (!list->str)
+		return (-1);
+	list->str[carac.len_str] = 0;
+	allocation(list, &carac);
+	padding_number(list, &carac);
+	if (carac.zero_x)
 	{
-		res[pos] = '0';
-		if (list->conversion == 'p')
-			res[pos + 1] = 'x';
-		else
-			res[pos + 1] = list->conversion;
+		list->str[carac.pos] = '0';
+		list->str[carac.pos + 1] = list->conversion == 'p'
+			? 'x' : list->conversion;
 	}
-	if (sgn)
+	if (carac.sgn)
 	{
 		if (list->flags & FLAG_SPACE)
-			res[pos] = ' ';
+			list->str[carac.pos] = ' ';
 		if (list->flags & FLAG_PLUS)
-			res[pos] = '+';
+			list->str[carac.pos] = '+';
 		if (list->flags & FLAG_NEG)
-			res[pos] = '-';
+			list->str[carac.pos] = '-';
 	}
 	return (1);
 }

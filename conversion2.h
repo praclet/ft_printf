@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 13:31:43 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/10 16:45:39 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/10 17:56:37 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,18 @@
 
 # include "list.h"
 
-int	convert_number_(t_chain *list);
+int				convert_number_(t_chain *list);
+
+typedef struct	s_carac
+{
+	int			sgn;
+	int			zero_x;
+	int			pos;
+	int			width;
+	int			prec;
+	int			len;
+	int			len_str;
+	char		*base;
+}				t_carac;
 
 #endif
