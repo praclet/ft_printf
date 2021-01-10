@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:02:48 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/10 09:41:08 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/10 15:06:36 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct					s_chain {
 }								t_chain;
 
 t_chain							*new_elem(void);
-t_chain							*check_list(t_chain *list);
+void							check_list(t_chain *list);
 void							delete_elem(t_chain *elem);
 void							delete_list(t_chain *list);
 char							*list_finish(t_chain *list, int length);

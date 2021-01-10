@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 14:29:58 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/03 09:07:20 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/10 15:04:55 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	ft_printf(const char *str, ...)
 	if (!list)
 		return (-1);
 	affectation(list, ap);
+	check_list(list);
 	va_end(ap);
 	if ((len = convert(list)) < 0)
 	{

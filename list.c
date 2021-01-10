@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 10:52:18 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/10 12:41:39 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/10 15:23:39 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,8 @@ t_chain		*new_elem(void)
 	return (res);
 }
 
-t_chain		*check_list(t_chain *elem)
+void		check_list(t_chain *elem)
 {
-	t_chain	*res;
-
-	res = elem;
 	while (elem)
 	{
 		if (elem->flags & FLAG_DASH)
@@ -57,7 +54,6 @@ t_chain		*check_list(t_chain *elem)
 			elem->flags &= ~FLAG_SPACE | ~FLAG_PLUS | ~FLAG_NEG;
 		elem = elem->next;
 	}
-	return (res);
 }
 
 void		delete_elem(t_chain *elem)

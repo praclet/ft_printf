@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 13:31:43 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/10 14:47:00 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/10 15:56:21 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,12 @@ int	padding_number(t_chain *list)
 		base = "0123456789abcdef";
 	if (list->conversion == 'X')
 		base = "0123456789ABCDEF";
-	len = digit_unb(list->u_arg.arg_ullint, ft_strlen(base));
+	if (list->precision == 0 && list->u_arg.arg_ullint == 0)
+		len = 0;
+	else
+		len = digit_unb(list->u_arg.arg_ullint, ft_strlen(base));
 	sgn = !!(list->flags & (FLAG_SPACE | FLAG_PLUS | FLAG_NEG));
-	zero_x = (ft_strchr("xX",list->conversion) && (list->flags & FLAG_SHARP)
+	zero_x = (ft_strchr("xX", list->conversion) && (list->flags & FLAG_SHARP)
 			&& list->u_arg.arg_ullint) || list->conversion == 'p';
 	if (list->flags & FLAG_ZERO &&
 		(list->precision == INT_MIN || list->precision - zero_x < list->width))
@@ -95,7 +98,7 @@ int	padding_number(t_chain *list)
 	pos = 0;
 	width = 0;
 	prec = 0;
-	if (len - sgn - zero_x * 2 < list->precision)
+	if (len < list->precision)
 	{
 		prec = list->precision - len;
 		if (list->width > list->precision + sgn + zero_x * 2)
@@ -113,14 +116,14 @@ int	padding_number(t_chain *list)
 			res[sgn + zero_x * 2 + prec] = list->width > 0 ? ' ' : 0;
 		else
 			uitoa_base(list->u_arg.arg_ullint, base,
-				   res + zero_x * 2 + sgn + prec);
+				res + zero_x * 2 + sgn + prec);
 		ft_memset(res + zero_x * 2 + sgn + prec + len, ' ', width);
 	}
 	else
 	{
 		pos = width;
 		ft_memset(res, ' ', width);
-		ft_memset(res +  zero_x * 2 + sgn + width, '0', prec);
+		ft_memset(res + zero_x * 2 + sgn + width, '0', prec);
 		if (list->u_arg.arg_ullint == 0 && list->precision == 0)
 			res[sgn + zero_x * 2 + width + prec] = list->width > 0 ? ' ' : 0;
 		else
