@@ -7,7 +7,8 @@ SRCS		:=	conversion.c		\
 				itoa_base.c			\
 				list.c				\
 				padding.c			\
-				parser.c
+				parser.c			\
+				parser2.c
 
 CC			:=	gcc
 CFLAGS		:=	-Wall -Wextra -Werror -g

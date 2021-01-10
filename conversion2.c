@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 13:31:43 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/10 18:32:17 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/10 18:46:47 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	base(t_chain *list, t_carac *carac)
 		list->precision = list->width - carac->sgn - carac->zero_x * 2;
 }
 
-void		allocation(t_chain *list, t_carac *carac)
+static void	allocation(t_chain *list, t_carac *carac)
 {
 	if (list->precision > list->width)
 	{
@@ -61,7 +61,7 @@ void		allocation(t_chain *list, t_carac *carac)
 	list->str = malloc(sizeof(char) * (carac->len_str + 1));
 }
 
-void		calculation(t_chain *list, t_carac *carac)
+static void	calculation(t_chain *list, t_carac *carac)
 {
 	carac->pos = 0;
 	carac->width = 0;
@@ -81,7 +81,7 @@ void		calculation(t_chain *list, t_carac *carac)
 	}
 }
 
-void		padding_number(t_chain *list, t_carac *carac)
+static void	padding_number(t_chain *list, t_carac *carac)
 {
 	if (list->flags & FLAG_DASH)
 	{
@@ -114,7 +114,7 @@ int			convert_number_(t_chain *list)
 	if (!list->str)
 		return (-1);
 	list->str[carac.len_str] = 0;
-	allocation(list, &carac);
+	calculation(list, &carac);
 	padding_number(list, &carac);
 	if (carac.zero_x)
 	{

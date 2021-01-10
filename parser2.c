@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:24:12 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/10 16:49:49 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/10 18:37:56 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "list.h"
 #include "libft/libft.h"
 
-static t_chain	*add_element(t_chain **res, t_chain **last)
+t_chain	*add_element(t_chain **res, t_chain **last)
 {
 	t_chain	*cur;
 
@@ -38,7 +38,7 @@ static t_chain	*add_element(t_chain **res, t_chain **last)
 	return (cur);
 }
 
-int				parse_text(const char **str,
+int		parse_text(const char **str,
 	t_chain **res, t_chain **cur, t_chain **last)
 {
 	const char	*start;
