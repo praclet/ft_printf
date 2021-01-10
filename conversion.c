@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 14:37:52 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/10 13:29:52 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/10 16:37:10 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "padding.h"
 #include "libft/libft.h"
 #include "itoa_base.h"
+#include "conversion2.h"
 
 static int	convert_c(t_chain *list)
 {
@@ -57,7 +58,7 @@ static int	convert_s(t_chain *list)
 
 static int	convert_number(t_chain *list)
 {
-	if (padding_number(list) < 0)
+	if (convert_number_(list) < 0)
 		return (-1);
 	return (ft_strlen(list->str));
 }
