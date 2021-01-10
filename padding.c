@@ -6,11 +6,12 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 13:31:43 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/10 13:22:47 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/10 14:47:00 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <limits.h>
 #include "list.h"
 #include "padding.h"
 #include "libft/libft.h"
@@ -55,19 +56,21 @@ int	padding_number(t_chain *list)
 	int		len_str;
 	char	*base;
 
-	if (list->conversion == 'd' || list->conversion == 'i')
+	if (list->conversion == 'd' || list->conversion == 'i'
+			|| list->conversion == 'u')
 		base = "0123456789";
 	if (list->conversion == 'o')
 		base = "01234567";
-	if (list->conversion == 'x')
+	if (list->conversion == 'x' || list->conversion == 'p')
 		base = "0123456789abcdef";
 	if (list->conversion == 'X')
 		base = "0123456789ABCDEF";
 	len = digit_unb(list->u_arg.arg_ullint, ft_strlen(base));
 	sgn = !!(list->flags & (FLAG_SPACE | FLAG_PLUS | FLAG_NEG));
-	zero_x = (ft_strchr("xX",list->conversion) && (list->flags & FLAG_SHARP))
-		|| list->conversion == 'p';
-	if (list->flags & FLAG_ZERO && list->precision - zero_x < list->width)
+	zero_x = (ft_strchr("xX",list->conversion) && (list->flags & FLAG_SHARP)
+			&& list->u_arg.arg_ullint) || list->conversion == 'p';
+	if (list->flags & FLAG_ZERO &&
+		(list->precision == INT_MIN || list->precision - zero_x < list->width))
 		list->precision = list->width - sgn - zero_x * 2;
 	if (list->precision > list->width)
 	{
@@ -127,7 +130,10 @@ int	padding_number(t_chain *list)
 	if (zero_x)
 	{
 		res[pos] = '0';
-		res[pos + 1] = list->conversion;
+		if (list->conversion == 'p')
+			res[pos + 1] = 'x';
+		else
+			res[pos + 1] = list->conversion;
 	}
 	if (sgn)
 	{
