@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:24:12 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/10 16:54:48 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/11 10:12:43 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void			parse_modifier_conversion(const char **str, t_chain *cur)
 			(*str)++;
 		}
 	}
-	if (**str && ft_strchr("c%spdiuxXo", **str))
+	if (**str && ft_strchr("c%spdiuxXon", **str))
 	{
 		cur->conversion = **str;
 		(*str)++;
@@ -110,6 +110,11 @@ t_chain			*parse(const char *str)
 	res = NULL;
 	cur = NULL;
 	last = NULL;
+	if (!(*str))
+	{
+		cur = add_element(&res, &last);
+		cur->str = ft_strdup("");
+	}
 	while (*str)
 	{
 		if (!parse_text(&str, &res, &cur, &last))

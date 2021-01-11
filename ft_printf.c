@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 14:29:58 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/10 16:07:44 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/11 09:39:45 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,5 @@ int	ft_printf(const char *str, ...)
 		free(tmp);
 		return (len);
 	}
-	return (-1);
+	return (0);
 }

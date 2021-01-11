@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 14:37:52 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/10 16:37:10 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/11 09:31:18 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ static int	convert_c(t_chain *list)
 	list->str[1] = 0;
 	if (padding(list, 1) < 0)
 		return (-1);
-	return (list->width);
+	if (list->width > 0)
+		return (list->width);
+	else
+		return (1);
 }
 
 static int	convert_s(t_chain *list)
