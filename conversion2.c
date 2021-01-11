@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/27 13:31:43 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/11 11:29:38 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/11 11:38:08 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	base(t_chain *list, t_carac *carac)
 	carac->zero_x = (ft_strchr("xX", list->conversion)
 		&& (list->flags & FLAG_SHARP) && list->u_arg.arg_ullint)
 		|| list->conversion == 'p';
-	if (list->width > 0 && (list->flags & FLAG_ZERO 
+	if (list->width > 0 && (list->flags & FLAG_ZERO
 			&& (list->precision == INT_MIN
 			|| list->precision - carac->zero_x < list->width)))
 		list->precision = list->width - carac->sgn - carac->zero_x * 2;

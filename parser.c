@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:24:12 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/11 10:12:43 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/11 12:28:17 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,34 +101,14 @@ void			parse_modifier_conversion(const char **str, t_chain *cur)
 
 t_chain			*parse(const char *str)
 {
-	t_chain	*res;
-	t_chain	*cur;
-	t_chain	*last;
-
 	if (!str)
 		return (NULL);
-	res = NULL;
-	cur = NULL;
-	last = NULL;
 	if (!(*str))
 	{
 		cur = add_element(&res, &last);
 		cur->str = ft_strdup("");
+		return (cur);
 	}
-	while (*str)
-	{
-		if (!parse_text(&str, &res, &cur, &last))
-			return (NULL);
-		if (*str == '%')
-		{
-			str++;
-			cur = add_element(&res, &last);
-			if (!cur)
-				return (NULL);
-			parse_flag(&str, cur);
-			parse_width_prec(&str, cur);
-			parse_modifier_conversion(&str, cur);
-		}
-	}
-	return (res);
+	else
+		return (parse_(str));
 }

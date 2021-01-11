@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:24:12 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/10 16:56:47 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/11 12:28:46 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,6 @@
 int		parse_text(const char **str, t_chain **res, t_chain **cur,
 		t_chain **last);
 t_chain	*add_element(t_chain **res, t_chain **last);
+t_chain	*parse_(char *str);
 
 #endif
