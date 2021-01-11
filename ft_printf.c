@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 14:29:58 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/11 09:39:45 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/11 10:32:43 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,19 @@
 #include "arg_affectation.h"
 #include "conversion.h"
 
+#include "libft/libft.h"
+
 int	ft_printf(const char *str, ...)
 {
 	t_chain	*list;
 	va_list	ap;
 	int		len;
 	char	*tmp;
+
+
+write(2, str, ft_strlen(str));
+
+
 
 	va_start(ap, str);
 	list = parse(str);

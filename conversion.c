@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 14:37:52 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/11 09:31:18 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/11 11:22:29 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,6 @@ static int	convert_s(t_chain *list)
 	return (len);
 }
 
-static int	convert_number(t_chain *list)
-{
-	if (convert_number_(list) < 0)
-		return (-1);
-	return (ft_strlen(list->str));
-}
-
 static int	convert_(t_chain *list)
 {
 	if (list->conversion == 'c')
@@ -73,7 +66,12 @@ static int	convert_(t_chain *list)
 	if (list->conversion == 's')
 		return (convert_s(list));
 	if (ft_strchr("diupxXo", list->conversion))
-		return (convert_number(list));
+	{
+		if (convert_number_(list) < 0)
+			return (-1);
+		else
+			return (ft_strlen(list->str));
+	}
 	return (0);
 }
 
