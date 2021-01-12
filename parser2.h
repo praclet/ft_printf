@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:24:12 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/11 12:28:46 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/11 12:42:45 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 # include "list.h"
 
-int		parse_text(const char **str, t_chain **res, t_chain **cur,
-		t_chain **last);
-t_chain	*add_element(t_chain **res, t_chain **last);
-t_chain	*parse_(char *str);
+void	parse_flag(const char **str, t_chain *cur);
+void	parse_prec(const char **str, t_chain *cur);
+void	parse_width_prec(const char **str, t_chain *cur);
+void	parse_modifier_conversion(const char **str, t_chain *cur);
 
 #endif
