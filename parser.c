@@ -6,7 +6,7 @@
 /*   By: praclet <praclet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:24:12 by praclet           #+#    #+#             */
-/*   Updated: 2021/01/11 12:44:15 by praclet          ###   ########lyon.fr   */
+/*   Updated: 2021/01/15 18:03:41 by praclet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,9 @@ t_chain			*parse(const char *str)
 		return (NULL);
 	if (!(*str))
 	{
+		res = NULL;
+		cur = NULL;
+		last = NULL;
 		cur = add_element(&res, &last);
 		cur->str = ft_strdup("");
 		return (cur);
